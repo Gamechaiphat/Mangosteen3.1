@@ -1,0 +1,1311 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Gamechaiphat/Mangosteen3.1/blob/main/aiagent_timezone\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Wf5KrEb6vrkR"
+      },
+      "source": [
+        "# ยินดีต้อนรับสู่ Colab"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install crewai"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "QOZsslloeYL2",
+        "outputId": "3529a28f-1ee0-4de5-ff0c-7b108d1a826f"
+      },
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Collecting crewai\n",
+            "  Downloading crewai-1.15.32-py3-none-any.whl.metadata (36 kB)\n",
+            "Collecting aiofiles~=24.1.0 (from crewai)\n",
+            "  Downloading aiofiles-24.1.0-py3-none-any.whl.metadata (10 kB)\n",
+            "Collecting aiosqlite~=0.21.0 (from crewai)\n",
+            "  Downloading aiosqlite-0.21.0-py3-none-any.whl.metadata (4.3 kB)\n",
+            "Collecting appdirs~=1.4.4 (from crewai)\n",
+            "  Downloading appdirs-1.4.4-py2.py3-none-any.whl.metadata (9.0 kB)\n",
+            "Collecting cel-python<0.6,>=0.5.0 (from crewai)\n",
+            "  Downloading cel_python-0.5.0-py3-none-any.whl.metadata (8.0 kB)\n",
+            "Collecting chromadb~=1.5.9 (from crewai)\n",
+            "  Downloading chromadb-1.5.9-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.0 kB)\n",
+            "Requirement already satisfied: click<9,>=8.1.7 in /usr/local/lib/python3.13/dist-packages (from crewai) (8.5.0)\n",
+            "Collecting crewai-cli==1.15.32 (from crewai)\n",
+            "  Downloading crewai_cli-1.15.32-py3-none-any.whl.metadata (1.7 kB)\n",
+            "Collecting crewai-core==1.15.32 (from crewai)\n",
+            "  Downloading crewai_core-1.15.32-py3-none-any.whl.metadata (1.2 kB)\n",
+            "Requirement already satisfied: httpx~=0.28.1 in /usr/local/lib/python3.13/dist-packages (from crewai) (0.28.1)\n",
+            "Collecting instructor<1.16,>=1.3.3 (from crewai)\n",
+            "  Downloading instructor-1.15.4-py3-none-any.whl.metadata (12 kB)\n",
+            "Collecting json-repair~=0.60.1 (from crewai)\n",
+            "  Downloading json_repair-0.60.1-py3-none-any.whl.metadata (19 kB)\n",
+            "Collecting json5~=0.10.0 (from crewai)\n",
+            "  Downloading json5-0.10.0-py3-none-any.whl.metadata (34 kB)\n",
+            "Collecting jsonref~=1.1.0 (from crewai)\n",
+            "  Downloading jsonref-1.1.0-py3-none-any.whl.metadata (2.7 kB)\n",
+            "Collecting lancedb<1.0.0,>=0.33.0 (from crewai)\n",
+            "  Downloading lancedb-0.40.0-cp310-abi3-manylinux_2_28_x86_64.whl.metadata (7.5 kB)\n",
+            "Collecting mcp<2,>=1.30.0 (from crewai)\n",
+            "  Downloading mcp-1.30.0-py3-none-any.whl.metadata (9.3 kB)\n",
+            "Collecting oauthlib<5,>=4.0.0 (from crewai)\n",
+            "  Downloading oauthlib-4.0.0-py3-none-any.whl.metadata (8.6 kB)\n",
+            "Requirement already satisfied: openai<3,>=2.30.0 in /usr/local/lib/python3.13/dist-packages (from crewai) (2.54.0)\n",
+            "Requirement already satisfied: openpyxl~=3.1.5 in /usr/local/lib/python3.13/dist-packages (from crewai) (3.1.5)\n",
+            "Collecting opentelemetry-api<2,>=1.45.1 (from crewai)\n",
+            "  Downloading opentelemetry_api-1.45.1-py3-none-any.whl.metadata (1.4 kB)\n",
+            "Collecting opentelemetry-exporter-otlp-proto-http<2,>=1.45.1 (from crewai)\n",
+            "  Downloading opentelemetry_exporter_otlp_proto_http-1.45.1-py3-none-any.whl.metadata (3.0 kB)\n",
+            "Collecting opentelemetry-sdk<2,>=1.45.1 (from crewai)\n",
+            "  Downloading opentelemetry_sdk-1.45.1-py3-none-any.whl.metadata (1.6 kB)\n",
+            "Collecting pdfplumber~=0.11.4 (from crewai)\n",
+            "  Downloading pdfplumber-0.11.10-py3-none-any.whl.metadata (43 kB)\n",
+            "Collecting portalocker~=2.7.0 (from crewai)\n",
+            "  Downloading portalocker-2.7.0-py2.py3-none-any.whl.metadata (6.8 kB)\n",
+            "Collecting pydantic-settings<3,>=2.14.2 (from crewai)\n",
+            "  Downloading pydantic_settings-2.16.2-py3-none-any.whl.metadata (4.0 kB)\n",
+            "Collecting pydantic<2.13,>=2.11.9 (from crewai)\n",
+            "  Downloading pydantic-2.12.5-py3-none-any.whl.metadata (90 kB)\n",
+            "Requirement already satisfied: pyjwt<3,>=2.15.0 in /usr/local/lib/python3.13/dist-packages (from crewai) (2.15.1)\n",
+            "Requirement already satisfied: python-dotenv<2,>=1.2.2 in /usr/local/lib/python3.13/dist-packages (from crewai) (1.2.4)\n",
+            "Requirement already satisfied: pyyaml~=6.0 in /usr/local/lib/python3.13/dist-packages (from crewai) (6.0.3)\n",
+            "Collecting regex~=2026.1.15 (from crewai)\n",
+            "  Downloading regex-2026.1.15-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (40 kB)\n",
+            "Requirement already satisfied: tokenizers<1,>=0.21 in /usr/local/lib/python3.13/dist-packages (from crewai) (0.23.3)\n",
+            "Collecting tomli-w~=1.1.0 (from crewai)\n",
+            "  Downloading tomli_w-1.1.0-py3-none-any.whl.metadata (5.7 kB)\n",
+            "Collecting tomli~=2.0.2 (from crewai)\n",
+            "  Downloading tomli-2.0.2-py3-none-any.whl.metadata (10.0 kB)\n",
+            "Requirement already satisfied: certifi>=2026.10.18 in /usr/local/lib/python3.13/dist-packages (from crewai-cli==1.15.32->crewai) (2026.10.23)\n",
+            "Requirement already satisfied: cryptography>=42.0 in /usr/local/lib/python3.13/dist-packages (from crewai-cli==1.15.32->crewai) (50.0.2)\n",
+            "Requirement already satisfied: packaging>=23.0 in /usr/local/lib/python3.13/dist-packages (from crewai-cli==1.15.32->crewai) (26.3)\n",
+            "Requirement already satisfied: rich>=13.7.1 in /usr/local/lib/python3.13/dist-packages (from crewai-cli==1.15.32->crewai) (13.9.4)\n",
+            "Collecting textual>=7.5.0 (from crewai-cli==1.15.32->crewai)\n",
+            "  Downloading textual-8.2.8-py3-none-any.whl.metadata (9.1 kB)\n",
+            "Collecting uv<1,>=0.13.4 (from crewai-cli==1.15.32->crewai)\n",
+            "  Downloading uv-0.13.6-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)\n",
+            "Requirement already satisfied: typing_extensions>=4.0 in /usr/local/lib/python3.13/dist-packages (from aiosqlite~=0.21.0->crewai) (4.16.0)\n",
+            "Collecting google-re2>=1.1.20240702 (from cel-python<0.6,>=0.5.0->crewai)\n",
+            "  Downloading google_re2-1.1.20251105-1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)\n",
+            "Collecting jmespath>=1.0.1 (from cel-python<0.6,>=0.5.0->crewai)\n",
+            "  Downloading jmespath-1.1.0-py3-none-any.whl.metadata (7.6 kB)\n",
+            "Requirement already satisfied: lark>=1.2.2 in /usr/local/lib/python3.13/dist-packages (from cel-python<0.6,>=0.5.0->crewai) (1.3.1)\n",
+            "Collecting pendulum>=3.1.0 (from cel-python<0.6,>=0.5.0->crewai)\n",
+            "  Downloading pendulum-3.3.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.8 kB)\n",
+            "Collecting build>=1.0.3 (from chromadb~=1.5.9->crewai)\n",
+            "  Downloading build-1.6.1-py3-none-any.whl.metadata (5.6 kB)\n",
+            "Collecting pybase64>=1.4.1 (from chromadb~=1.5.9->crewai)\n",
+            "  Downloading pybase64-1.5.1-cp313-cp313-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.whl.metadata (11 kB)\n",
+            "Requirement already satisfied: uvicorn>=0.18.3 in /usr/local/lib/python3.13/dist-packages (from uvicorn[standard]>=0.18.3->chromadb~=1.5.9->crewai) (0.54.0)\n",
+            "Requirement already satisfied: numpy>=1.22.5 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai) (2.1.3)\n",
+            "Collecting onnxruntime>=1.14.1 (from chromadb~=1.5.9->crewai)\n",
+            "  Downloading onnxruntime-1.31.1-cp313-cp313-manylinux_2_28_x86_64.whl.metadata (5.8 kB)\n",
+            "Collecting opentelemetry-exporter-otlp-proto-grpc>=1.2.0 (from chromadb~=1.5.9->crewai)\n",
+            "  Downloading opentelemetry_exporter_otlp_proto_grpc-1.45.1-py3-none-any.whl.metadata (2.6 kB)\n",
+            "Collecting pypika>=0.48.9 (from chromadb~=1.5.9->crewai)\n",
+            "  Downloading pypika-0.51.1-py2.py3-none-any.whl.metadata (51 kB)\n",
+            "Requirement already satisfied: tqdm>=4.65.0 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai) (4.67.3)\n",
+            "Collecting overrides>=7.3.1 (from chromadb~=1.5.9->crewai)\n",
+            "  Downloading overrides-7.7.0-py3-none-any.whl.metadata (5.8 kB)\n",
+            "Collecting importlib-resources (from chromadb~=1.5.9->crewai)\n",
+            "  Downloading importlib_resources-7.1.0-py3-none-any.whl.metadata (4.0 kB)\n",
+            "Requirement already satisfied: grpcio>=1.58.0 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai) (1.84.1)\n",
+            "Collecting bcrypt>=4.0.1 (from chromadb~=1.5.9->crewai)\n",
+            "  Downloading bcrypt-5.0.0-cp39-abi3-manylinux_2_34_x86_64.whl.metadata (10 kB)\n",
+            "Requirement already satisfied: typer>=0.9.0 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai) (0.27.3)\n",
+            "Collecting kubernetes>=28.1.0 (from chromadb~=1.5.9->crewai)\n",
+            "  Downloading kubernetes-37.0.1-py2.py3-none-any.whl.metadata (1.9 kB)\n",
+            "Requirement already satisfied: tenacity>=8.2.3 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai) (9.1.4)\n",
+            "Requirement already satisfied: mmh3>=4.0.1 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai) (5.3.1)\n",
+            "Requirement already satisfied: orjson>=3.9.12 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai) (3.13.0)\n",
+            "Requirement already satisfied: jsonschema>=4.19.0 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai) (4.26.0)\n",
+            "Requirement already satisfied: anyio in /usr/local/lib/python3.13/dist-packages (from httpx~=0.28.1->crewai) (4.15.1)\n",
+            "Requirement already satisfied: httpcore==1.* in /usr/local/lib/python3.13/dist-packages (from httpx~=0.28.1->crewai) (1.0.9)\n",
+            "Requirement already satisfied: idna in /usr/local/lib/python3.13/dist-packages (from httpx~=0.28.1->crewai) (3.20)\n",
+            "Requirement already satisfied: h11>=0.16 in /usr/local/lib/python3.13/dist-packages (from httpcore==1.*->httpx~=0.28.1->crewai) (0.16.0)\n",
+            "Requirement already satisfied: aiohttp<4.0.0,>=3.9.1 in /usr/local/lib/python3.13/dist-packages (from instructor<1.16,>=1.3.3->crewai) (3.14.5)\n",
+            "Requirement already satisfied: docstring-parser<1.0,>=0.16 in /usr/local/lib/python3.13/dist-packages (from instructor<1.16,>=1.3.3->crewai) (0.18.0)\n",
+            "Requirement already satisfied: jinja2<4.0.0,>=3.1.4 in /usr/local/lib/python3.13/dist-packages (from instructor<1.16,>=1.3.3->crewai) (3.1.6)\n",
+            "Collecting jiter<0.15,>=0.6.1 (from instructor<1.16,>=1.3.3->crewai)\n",
+            "  Downloading jiter-0.14.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.2 kB)\n",
+            "Requirement already satisfied: pydantic-core<3.0.0,>=2.18.0 in /usr/local/lib/python3.13/dist-packages (from instructor<1.16,>=1.3.3->crewai) (2.50.1)\n",
+            "Requirement already satisfied: requests<3.0.0,>=2.32.3 in /usr/local/lib/python3.13/dist-packages (from instructor<1.16,>=1.3.3->crewai) (2.32.4)\n",
+            "Requirement already satisfied: aiohappyeyeballs>=2.5.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp<4.0.0,>=3.9.1->instructor<1.16,>=1.3.3->crewai) (2.7.1)\n",
+            "Requirement already satisfied: aiosignal>=1.4.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp<4.0.0,>=3.9.1->instructor<1.16,>=1.3.3->crewai) (1.4.0)\n",
+            "Requirement already satisfied: attrs>=17.3.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp<4.0.0,>=3.9.1->instructor<1.16,>=1.3.3->crewai) (26.1.0)\n",
+            "Requirement already satisfied: frozenlist>=1.1.1 in /usr/local/lib/python3.13/dist-packages (from aiohttp<4.0.0,>=3.9.1->instructor<1.16,>=1.3.3->crewai) (1.8.0)\n",
+            "Requirement already satisfied: multidict<8.0,>=4.5 in /usr/local/lib/python3.13/dist-packages (from aiohttp<4.0.0,>=3.9.1->instructor<1.16,>=1.3.3->crewai) (7.2.0)\n",
+            "Requirement already satisfied: propcache>=0.2.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp<4.0.0,>=3.9.1->instructor<1.16,>=1.3.3->crewai) (0.5.4)\n",
+            "Requirement already satisfied: yarl<2.0,>=1.25.1 in /usr/local/lib/python3.13/dist-packages (from aiohttp<4.0.0,>=3.9.1->instructor<1.16,>=1.3.3->crewai) (1.25.1)\n",
+            "Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.13/dist-packages (from jinja2<4.0.0,>=3.1.4->instructor<1.16,>=1.3.3->crewai) (3.0.4)\n",
+            "Requirement already satisfied: deprecation>=2.1.0 in /usr/local/lib/python3.13/dist-packages (from lancedb<1.0.0,>=0.33.0->crewai) (2.1.0)\n",
+            "Requirement already satisfied: pyarrow>=16 in /usr/local/lib/python3.13/dist-packages (from lancedb<1.0.0,>=0.33.0->crewai) (23.0.1)\n",
+            "Collecting lance-namespace>=0.3.2 (from lancedb<1.0.0,>=0.33.0->crewai)\n",
+            "  Downloading lance_namespace-0.13.0-py3-none-any.whl.metadata (1.6 kB)\n",
+            "Collecting httpx-sse>=0.4 (from mcp<2,>=1.30.0->crewai)\n",
+            "  Downloading httpx_sse-0.4.3-py3-none-any.whl.metadata (9.7 kB)\n",
+            "Requirement already satisfied: python-multipart>=0.0.9 in /usr/local/lib/python3.13/dist-packages (from mcp<2,>=1.30.0->crewai) (0.0.32)\n",
+            "Collecting sse-starlette>=1.6.1 (from mcp<2,>=1.30.0->crewai)\n",
+            "  Downloading sse_starlette-3.6.0-py3-none-any.whl.metadata (15 kB)\n",
+            "Requirement already satisfied: starlette>=0.27 in /usr/local/lib/python3.13/dist-packages (from mcp<2,>=1.30.0->crewai) (1.9.0)\n",
+            "Requirement already satisfied: typing-inspection>=0.4.1 in /usr/local/lib/python3.13/dist-packages (from mcp<2,>=1.30.0->crewai) (0.4.4)\n",
+            "Requirement already satisfied: distro<2,>=1.7.0 in /usr/local/lib/python3.13/dist-packages (from openai<3,>=2.30.0->crewai) (1.9.0)\n",
+            "Requirement already satisfied: sniffio in /usr/local/lib/python3.13/dist-packages (from openai<3,>=2.30.0->crewai) (1.3.1)\n",
+            "Requirement already satisfied: et-xmlfile in /usr/local/lib/python3.13/dist-packages (from openpyxl~=3.1.5->crewai) (2.0.0)\n",
+            "Requirement already satisfied: googleapis-common-protos~=1.52 in /usr/local/lib/python3.13/dist-packages (from opentelemetry-exporter-otlp-proto-http<2,>=1.45.1->crewai) (1.76.0)\n",
+            "Collecting opentelemetry-exporter-http-transport==0.66b1 (from opentelemetry-exporter-http-transport[requests]==0.66b1->opentelemetry-exporter-otlp-proto-http<2,>=1.45.1->crewai)\n",
+            "  Downloading opentelemetry_exporter_http_transport-0.66b1-py3-none-any.whl.metadata (2.3 kB)\n",
+            "Collecting opentelemetry-exporter-otlp-common==0.66b1 (from opentelemetry-exporter-otlp-proto-http<2,>=1.45.1->crewai)\n",
+            "  Downloading opentelemetry_exporter_otlp_common-0.66b1-py3-none-any.whl.metadata (1.9 kB)\n",
+            "Collecting opentelemetry-exporter-otlp-proto-common==1.45.1 (from opentelemetry-exporter-otlp-proto-http<2,>=1.45.1->crewai)\n",
+            "  Downloading opentelemetry_exporter_otlp_proto_common-1.45.1-py3-none-any.whl.metadata (1.8 kB)\n",
+            "Collecting opentelemetry-proto==1.45.1 (from opentelemetry-exporter-otlp-proto-http<2,>=1.45.1->crewai)\n",
+            "  Downloading opentelemetry_proto-1.45.1-py3-none-any.whl.metadata (2.3 kB)\n",
+            "Requirement already satisfied: protobuf<8.0,>=5.0 in /usr/local/lib/python3.13/dist-packages (from opentelemetry-proto==1.45.1->opentelemetry-exporter-otlp-proto-http<2,>=1.45.1->crewai) (6.33.6)\n",
+            "Collecting opentelemetry-semantic-conventions==0.66b1 (from opentelemetry-sdk<2,>=1.45.1->crewai)\n",
+            "  Downloading opentelemetry_semantic_conventions-0.66b1-py3-none-any.whl.metadata (2.4 kB)\n",
+            "Collecting pdfminer.six==20260107 (from pdfplumber~=0.11.4->crewai)\n",
+            "  Downloading pdfminer_six-20260107-py3-none-any.whl.metadata (4.3 kB)\n",
+            "Collecting Pillow>=12.2.0 (from pdfplumber~=0.11.4->crewai)\n",
+            "  Downloading pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.1 kB)\n",
+            "Collecting pypdfium2>=5.9.0 (from pdfplumber~=0.11.4->crewai)\n",
+            "  Downloading pypdfium2-5.14.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)\n",
+            "Requirement already satisfied: charset-normalizer>=2.0.0 in /usr/local/lib/python3.13/dist-packages (from pdfminer.six==20260107->pdfplumber~=0.11.4->crewai) (3.4.9)\n",
+            "Requirement already satisfied: annotated-types>=0.6.0 in /usr/local/lib/python3.13/dist-packages (from pydantic<2.13,>=2.11.9->crewai) (0.8.0)\n",
+            "Collecting pydantic-core<3.0.0,>=2.18.0 (from instructor<1.16,>=1.3.3->crewai)\n",
+            "  Downloading pydantic_core-2.41.5-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.3 kB)\n",
+            "Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.13/dist-packages (from requests<3.0.0,>=2.32.3->instructor<1.16,>=1.3.3->crewai) (2.5.0)\n",
+            "Requirement already satisfied: markdown-it-py>=2.2.0 in /usr/local/lib/python3.13/dist-packages (from rich>=13.7.1->crewai-cli==1.15.32->crewai) (4.2.0)\n",
+            "Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /usr/local/lib/python3.13/dist-packages (from rich>=13.7.1->crewai-cli==1.15.32->crewai) (2.21.0)\n",
+            "Requirement already satisfied: huggingface-hub<3.0,>=0.16.4 in /usr/local/lib/python3.13/dist-packages (from tokenizers<1,>=0.21->crewai) (1.33.0)\n",
+            "Requirement already satisfied: filelock>=3.10.0 in /usr/local/lib/python3.13/dist-packages (from huggingface-hub<3.0,>=0.16.4->tokenizers<1,>=0.21->crewai) (4.2.4)\n",
+            "Requirement already satisfied: fsspec>=2023.5.0 in /usr/local/lib/python3.13/dist-packages (from huggingface-hub<3.0,>=0.16.4->tokenizers<1,>=0.21->crewai) (2025.12.0)\n",
+            "Requirement already satisfied: hf-xet<2.0.0,>=1.6.0 in /usr/local/lib/python3.13/dist-packages (from huggingface-hub<3.0,>=0.16.4->tokenizers<1,>=0.21->crewai) (1.7.0)\n",
+            "Requirement already satisfied: shellingham>=1.3.0 in /usr/local/lib/python3.13/dist-packages (from typer>=0.9.0->chromadb~=1.5.9->crewai) (1.5.4)\n",
+            "Requirement already satisfied: annotated-doc>=0.0.2 in /usr/local/lib/python3.13/dist-packages (from typer>=0.9.0->chromadb~=1.5.9->crewai) (0.0.5)\n",
+            "Collecting pyproject_hooks (from build>=1.0.3->chromadb~=1.5.9->crewai)\n",
+            "  Downloading pyproject_hooks-1.3.3-py3-none-any.whl.metadata (1.3 kB)\n",
+            "Requirement already satisfied: cffi>=2.0.0 in /usr/local/lib/python3.13/dist-packages (from cryptography>=42.0->crewai-cli==1.15.32->crewai) (2.1.1)\n",
+            "Requirement already satisfied: pycparser in /usr/local/lib/python3.13/dist-packages (from cffi>=2.0.0->cryptography>=42.0->crewai-cli==1.15.32->crewai) (3.12)\n",
+            "Requirement already satisfied: jsonschema-specifications>=2023.03.6 in /usr/local/lib/python3.13/dist-packages (from jsonschema>=4.19.0->chromadb~=1.5.9->crewai) (2025.9.1)\n",
+            "Requirement already satisfied: referencing>=0.28.4 in /usr/local/lib/python3.13/dist-packages (from jsonschema>=4.19.0->chromadb~=1.5.9->crewai) (0.37.0)\n",
+            "Requirement already satisfied: rpds-py>=0.25.0 in /usr/local/lib/python3.13/dist-packages (from jsonschema>=4.19.0->chromadb~=1.5.9->crewai) (2026.9.1)\n",
+            "Requirement already satisfied: python-dateutil>=2.8.2 in /usr/local/lib/python3.13/dist-packages (from kubernetes>=28.1.0->chromadb~=1.5.9->crewai) (2.9.0.post0)\n",
+            "INFO: pip is looking at multiple versions of kubernetes to determine which version is compatible with other requirements. This could take a while.\n",
+            "Collecting kubernetes>=28.1.0 (from chromadb~=1.5.9->crewai)\n",
+            "  Downloading kubernetes-37.0.0-py2.py3-none-any.whl.metadata (1.9 kB)\n",
+            "  Downloading kubernetes-36.0.3-py2.py3-none-any.whl.metadata (1.8 kB)\n",
+            "Requirement already satisfied: six>=1.9.0 in /usr/local/lib/python3.13/dist-packages (from kubernetes>=28.1.0->chromadb~=1.5.9->crewai) (1.17.0)\n",
+            "Requirement already satisfied: websocket-client!=0.40.0,!=0.41.*,!=0.42.*,>=0.32.0 in /usr/local/lib/python3.13/dist-packages (from kubernetes>=28.1.0->chromadb~=1.5.9->crewai) (1.9.2)\n",
+            "Requirement already satisfied: requests-oauthlib in /usr/local/lib/python3.13/dist-packages (from kubernetes>=28.1.0->chromadb~=1.5.9->crewai) (2.0.0)\n",
+            "Collecting durationpy>=0.7 (from kubernetes>=28.1.0->chromadb~=1.5.9->crewai)\n",
+            "  Downloading durationpy-0.11-py3-none-any.whl.metadata (474 bytes)\n",
+            "Collecting lance-namespace-urllib3-client==0.13.0 (from lance-namespace>=0.3.2->lancedb<1.0.0,>=0.33.0->crewai)\n",
+            "  Downloading lance_namespace_urllib3_client-0.13.0-py3-none-any.whl.metadata (31 kB)\n",
+            "Requirement already satisfied: mdurl~=0.1 in /usr/local/lib/python3.13/dist-packages (from markdown-it-py>=2.2.0->rich>=13.7.1->crewai-cli==1.15.32->crewai) (0.1.2)\n",
+            "Requirement already satisfied: flatbuffers in /usr/local/lib/python3.13/dist-packages (from onnxruntime>=1.14.1->chromadb~=1.5.9->crewai) (25.12.19)\n",
+            "Requirement already satisfied: tzdata>=2020.1 in /usr/local/lib/python3.13/dist-packages (from pendulum>=3.1.0->cel-python<0.6,>=0.5.0->crewai) (2026.5)\n",
+            "Requirement already satisfied: mdit-py-plugins in /usr/local/lib/python3.13/dist-packages (from textual>=7.5.0->crewai-cli==1.15.32->crewai) (0.6.1)\n",
+            "Requirement already satisfied: platformdirs<5,>=3.6.0 in /usr/local/lib/python3.13/dist-packages (from textual>=7.5.0->crewai-cli==1.15.32->crewai) (4.13.5)\n",
+            "Collecting rich>=13.7.1 (from crewai-cli==1.15.32->crewai)\n",
+            "  Downloading rich-14.3.4-py3-none-any.whl.metadata (18 kB)\n",
+            "Requirement already satisfied: linkify-it-py<3,>=1 in /usr/local/lib/python3.13/dist-packages (from markdown-it-py[linkify]>=2.1.0->textual>=7.5.0->crewai-cli==1.15.32->crewai) (2.2.0)\n",
+            "Requirement already satisfied: httptools>=0.8.0 in /usr/local/lib/python3.13/dist-packages (from uvicorn[standard]>=0.18.3->chromadb~=1.5.9->crewai) (0.9.0)\n",
+            "Requirement already satisfied: uvloop>=0.15.1 in /usr/local/lib/python3.13/dist-packages (from uvicorn[standard]>=0.18.3->chromadb~=1.5.9->crewai) (0.23.0)\n",
+            "Requirement already satisfied: watchfiles>=0.20 in /usr/local/lib/python3.13/dist-packages (from uvicorn[standard]>=0.18.3->chromadb~=1.5.9->crewai) (1.3.0)\n",
+            "Requirement already satisfied: websockets>=13.0 in /usr/local/lib/python3.13/dist-packages (from uvicorn[standard]>=0.18.3->chromadb~=1.5.9->crewai) (15.0.1)\n",
+            "Downloading crewai-1.15.32-py3-none-any.whl (1.4 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m1.4/1.4 MB\u001b[0m \u001b[31m18.5 MB/s\u001b[0m  \u001b[33m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading crewai_cli-1.15.32-py3-none-any.whl (251 kB)\n",
+            "Downloading crewai_core-1.15.32-py3-none-any.whl (1.3 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m1.3/1.3 MB\u001b[0m \u001b[31m54.2 MB/s\u001b[0m  \u001b[33m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading aiofiles-24.1.0-py3-none-any.whl (15 kB)\n",
+            "Downloading aiosqlite-0.21.0-py3-none-any.whl (15 kB)\n",
+            "Downloading appdirs-1.4.4-py2.py3-none-any.whl (9.6 kB)\n",
+            "Downloading cel_python-0.5.0-py3-none-any.whl (84 kB)\n",
+            "Downloading chromadb-1.5.9-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (23.3 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m23.3/23.3 MB\u001b[0m \u001b[31m88.1 MB/s\u001b[0m  \u001b[33m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading instructor-1.15.4-py3-none-any.whl (252 kB)\n",
+            "Downloading jiter-0.14.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (353 kB)\n",
+            "Downloading json_repair-0.60.1-py3-none-any.whl (48 kB)\n",
+            "Downloading json5-0.10.0-py3-none-any.whl (34 kB)\n",
+            "Downloading jsonref-1.1.0-py3-none-any.whl (9.4 kB)\n",
+            "Downloading lancedb-0.40.0-cp310-abi3-manylinux_2_28_x86_64.whl (75.2 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m75.2/75.2 MB\u001b[0m \u001b[31m54.2 MB/s\u001b[0m  \u001b[33m0:00:01\u001b[0m\n",
+            "\u001b[?25hDownloading mcp-1.30.0-py3-none-any.whl (234 kB)\n",
+            "Downloading oauthlib-4.0.0-py3-none-any.whl (159 kB)\n",
+            "Downloading opentelemetry_api-1.45.1-py3-none-any.whl (60 kB)\n",
+            "Downloading opentelemetry_exporter_otlp_proto_http-1.45.1-py3-none-any.whl (22 kB)\n",
+            "Downloading opentelemetry_exporter_http_transport-0.66b1-py3-none-any.whl (12 kB)\n",
+            "Downloading opentelemetry_exporter_otlp_common-0.66b1-py3-none-any.whl (12 kB)\n",
+            "Downloading opentelemetry_exporter_otlp_proto_common-1.45.1-py3-none-any.whl (15 kB)\n",
+            "Downloading opentelemetry_proto-1.45.1-py3-none-any.whl (72 kB)\n",
+            "Downloading opentelemetry_sdk-1.45.1-py3-none-any.whl (140 kB)\n",
+            "Downloading opentelemetry_semantic_conventions-0.66b1-py3-none-any.whl (206 kB)\n",
+            "Downloading pdfplumber-0.11.10-py3-none-any.whl (60 kB)\n",
+            "Downloading pdfminer_six-20260107-py3-none-any.whl (6.6 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m6.6/6.6 MB\u001b[0m \u001b[31m79.5 MB/s\u001b[0m  \u001b[33m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading portalocker-2.7.0-py2.py3-none-any.whl (15 kB)\n",
+            "Downloading pydantic-2.12.5-py3-none-any.whl (463 kB)\n",
+            "Downloading pydantic_core-2.41.5-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m2.1/2.1 MB\u001b[0m \u001b[31m87.8 MB/s\u001b[0m  \u001b[33m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading pydantic_settings-2.16.2-py3-none-any.whl (81 kB)\n",
+            "Downloading regex-2026.1.15-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (803 kB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m803.6/803.6 kB\u001b[0m \u001b[31m42.6 MB/s\u001b[0m  \u001b[33m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading tomli-2.0.2-py3-none-any.whl (13 kB)\n",
+            "Downloading tomli_w-1.1.0-py3-none-any.whl (6.4 kB)\n",
+            "Downloading uv-0.13.6-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.3 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m17.3/17.3 MB\u001b[0m \u001b[31m88.8 MB/s\u001b[0m  \u001b[33m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading bcrypt-5.0.0-cp39-abi3-manylinux_2_34_x86_64.whl (278 kB)\n",
+            "Downloading build-1.6.1-py3-none-any.whl (31 kB)\n",
+            "Downloading google_re2-1.1.20251105-1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (591 kB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m591.4/591.4 kB\u001b[0m \u001b[31m21.3 MB/s\u001b[0m  \u001b[33m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading httpx_sse-0.4.3-py3-none-any.whl (9.0 kB)\n",
+            "Downloading jmespath-1.1.0-py3-none-any.whl (20 kB)\n",
+            "Downloading kubernetes-36.0.3-py2.py3-none-any.whl (4.6 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m4.6/4.6 MB\u001b[0m \u001b[31m84.4 MB/s\u001b[0m  \u001b[33m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading durationpy-0.11-py3-none-any.whl (4.1 kB)\n",
+            "Downloading lance_namespace-0.13.0-py3-none-any.whl (13 kB)\n",
+            "Downloading lance_namespace_urllib3_client-0.13.0-py3-none-any.whl (406 kB)\n",
+            "Downloading onnxruntime-1.31.1-cp313-cp313-manylinux_2_28_x86_64.whl (23.8 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m23.8/23.8 MB\u001b[0m \u001b[31m87.6 MB/s\u001b[0m  \u001b[33m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading opentelemetry_exporter_otlp_proto_grpc-1.45.1-py3-none-any.whl (19 kB)\n",
+            "Downloading overrides-7.7.0-py3-none-any.whl (17 kB)\n",
+            "Downloading pendulum-3.3.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (341 kB)\n",
+            "Downloading pillow-13.0.0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (7.1 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m7.1/7.1 MB\u001b[0m \u001b[31m78.7 MB/s\u001b[0m  \u001b[33m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading pybase64-1.5.1-cp313-cp313-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.whl (95 kB)\n",
+            "Downloading pypdfium2-5.14.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.8 MB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m3.8/3.8 MB\u001b[0m \u001b[31m90.5 MB/s\u001b[0m  \u001b[33m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading pypika-0.51.1-py2.py3-none-any.whl (60 kB)\n",
+            "Downloading sse_starlette-3.6.0-py3-none-any.whl (17 kB)\n",
+            "Downloading textual-8.2.8-py3-none-any.whl (731 kB)\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m731.4/731.4 kB\u001b[0m \u001b[31m34.9 MB/s\u001b[0m  \u001b[33m0:00:00\u001b[0m\n",
+            "\u001b[?25hDownloading rich-14.3.4-py3-none-any.whl (310 kB)\n",
+            "Downloading importlib_resources-7.1.0-py3-none-any.whl (37 kB)\n",
+            "Downloading pyproject_hooks-1.3.3-py3-none-any.whl (10 kB)\n",
+            "Installing collected packages: pypika, durationpy, appdirs, uv, tomli-w, tomli, regex, pyproject_hooks, pypdfium2, pydantic-core, pybase64, portalocker, Pillow, overrides, opentelemetry-proto, opentelemetry-api, onnxruntime, oauthlib, jsonref, json5, json-repair, jmespath, jiter, importlib-resources, httpx-sse, google-re2, bcrypt, aiosqlite, aiofiles, rich, pydantic, pendulum, opentelemetry-semantic-conventions, opentelemetry-exporter-otlp-proto-common, opentelemetry-exporter-http-transport, build, textual, sse-starlette, pydantic-settings, pdfminer.six, opentelemetry-sdk, lance-namespace-urllib3-client, kubernetes, cel-python, pdfplumber, opentelemetry-exporter-otlp-common, mcp, lance-namespace, instructor, opentelemetry-exporter-otlp-proto-http, opentelemetry-exporter-otlp-proto-grpc, lancedb, crewai-core, chromadb, crewai-cli, crewai\n",
+            "\u001b[2K  Attempting uninstall: regex\n",
+            "\u001b[2K    Found existing installation: regex 2025.11.3\n",
+            "\u001b[2K    Uninstalling regex-2025.11.3:\n",
+            "\u001b[2K      Successfully uninstalled regex-2025.11.3\n",
+            "\u001b[2K  Attempting uninstall: pydantic-core\n",
+            "\u001b[2K    Found existing installation: pydantic_core 2.50.1\n",
+            "\u001b[2K    Uninstalling pydantic_core-2.50.1:\n",
+            "\u001b[2K      Successfully uninstalled pydantic_core-2.50.1\n",
+            "\u001b[2K  Attempting uninstall: Pillow\n",
+            "\u001b[2K    Found existing installation: pillow 11.3.0\n",
+            "\u001b[2K    Uninstalling pillow-11.3.0:\n",
+            "\u001b[2K      Successfully uninstalled pillow-11.3.0\n",
+            "\u001b[2K  Attempting uninstall: opentelemetry-api\n",
+            "\u001b[2K    Found existing installation: opentelemetry-api 1.42.1\n",
+            "\u001b[2K    Uninstalling opentelemetry-api-1.42.1:\n",
+            "\u001b[2K      Successfully uninstalled opentelemetry-api-1.42.1\n",
+            "\u001b[2K  Attempting uninstall: oauthlib\n",
+            "\u001b[2K    Found existing installation: oauthlib 3.3.1\n",
+            "\u001b[2K    Uninstalling oauthlib-3.3.1:\n",
+            "\u001b[2K      Successfully uninstalled oauthlib-3.3.1\n",
+            "\u001b[2K  Attempting uninstall: jiter\n",
+            "\u001b[2K    Found existing installation: jiter 0.18.0\n",
+            "\u001b[2K    Uninstalling jiter-0.18.0:\n",
+            "\u001b[2K      Successfully uninstalled jiter-0.18.0\n",
+            "\u001b[2K  Attempting uninstall: aiosqlite\n",
+            "\u001b[2K    Found existing installation: aiosqlite 0.22.1\n",
+            "\u001b[2K    Uninstalling aiosqlite-0.22.1:\n",
+            "\u001b[2K      Successfully uninstalled aiosqlite-0.22.1\n",
+            "\u001b[2K  Attempting uninstall: aiofiles\n",
+            "\u001b[2K    Found existing installation: aiofiles 25.1.0\n",
+            "\u001b[2K    Uninstalling aiofiles-25.1.0:\n",
+            "\u001b[2K      Successfully uninstalled aiofiles-25.1.0\n",
+            "\u001b[2K  Attempting uninstall: rich\n",
+            "\u001b[2K    Found existing installation: rich 13.9.4\n",
+            "\u001b[2K    Uninstalling rich-13.9.4:\n",
+            "\u001b[2K      Successfully uninstalled rich-13.9.4\n",
+            "\u001b[2K  Attempting uninstall: pydantic\n",
+            "\u001b[2K    Found existing installation: pydantic 2.14.1\n",
+            "\u001b[2K    Uninstalling pydantic-2.14.1:\n",
+            "\u001b[2K      Successfully uninstalled pydantic-2.14.1\n",
+            "\u001b[2K  Attempting uninstall: opentelemetry-semantic-conventions\n",
+            "\u001b[2K    Found existing installation: opentelemetry-semantic-conventions 0.63b1\n",
+            "\u001b[2K    Uninstalling opentelemetry-semantic-conventions-0.63b1:\n",
+            "\u001b[2K      Successfully uninstalled opentelemetry-semantic-conventions-0.63b1\n",
+            "\u001b[2K  Attempting uninstall: opentelemetry-sdk\n",
+            "\u001b[2K    Found existing installation: opentelemetry-sdk 1.42.1\n",
+            "\u001b[2K    Uninstalling opentelemetry-sdk-1.42.1:\n",
+            "\u001b[2K      Successfully uninstalled opentelemetry-sdk-1.42.1\n",
+            "\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m56/56\u001b[0m [crewai]\n",
+            "\u001b[1A\u001b[2K\u001b[31mERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n",
+            "gradio 6.30.0 requires pillow<13.0,>=8.0, but you have pillow 13.0.0 which is incompatible.\n",
+            "bigframes 2.51.0 requires rich<14,>=12.4.4, but you have rich 14.3.4 which is incompatible.\n",
+            "tweepy 4.17.0 requires oauthlib<4,>=3.2.0, but you have oauthlib 4.0.0 which is incompatible.\n",
+            "google-adk 2.7.1 requires opentelemetry-api<=1.42.1,>=1.39, but you have opentelemetry-api 1.45.1 which is incompatible.\n",
+            "google-adk 2.7.1 requires opentelemetry-sdk<=1.42.1,>=1.39, but you have opentelemetry-sdk 1.45.1 which is incompatible.\u001b[0m\u001b[31m\n",
+            "\u001b[0mSuccessfully installed Pillow-13.0.0 aiofiles-24.1.0 aiosqlite-0.21.0 appdirs-1.4.4 bcrypt-5.0.0 build-1.6.1 cel-python-0.5.0 chromadb-1.5.9 crewai-1.15.32 crewai-cli-1.15.32 crewai-core-1.15.32 durationpy-0.11 google-re2-1.1.20251105 httpx-sse-0.4.3 importlib-resources-7.1.0 instructor-1.15.4 jiter-0.14.0 jmespath-1.1.0 json-repair-0.60.1 json5-0.10.0 jsonref-1.1.0 kubernetes-36.0.3 lance-namespace-0.13.0 lance-namespace-urllib3-client-0.13.0 lancedb-0.40.0 mcp-1.30.0 oauthlib-4.0.0 onnxruntime-1.31.1 opentelemetry-api-1.45.1 opentelemetry-exporter-http-transport-0.66b1 opentelemetry-exporter-otlp-common-0.66b1 opentelemetry-exporter-otlp-proto-common-1.45.1 opentelemetry-exporter-otlp-proto-grpc-1.45.1 opentelemetry-exporter-otlp-proto-http-1.45.1 opentelemetry-proto-1.45.1 opentelemetry-sdk-1.45.1 opentelemetry-semantic-conventions-0.66b1 overrides-7.7.0 pdfminer.six-20260107 pdfplumber-0.11.10 pendulum-3.3.0 portalocker-2.7.0 pybase64-1.5.1 pydantic-2.12.5 pydantic-core-2.41.5 pydantic-settings-2.16.2 pypdfium2-5.14.0 pypika-0.51.1 pyproject_hooks-1.3.3 regex-2026.1.15 rich-14.3.4 sse-starlette-3.6.0 textual-8.2.8 tomli-2.0.2 tomli-w-1.1.0 uv-0.13.6\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import os\n",
+        "from crewai import LLM, Task, Agent, Crew\n",
+        "from crewai.tools import BaseTool\n",
+        "from datetime import datetime\n",
+        "import pytz\n",
+        "\n",
+        "llm = LLM(\n",
+        "    model=\"ollama/qwen2.5:7b\",\n",
+        "    base_url=\"http://localhost:11434\",\n",
+        ")"
+      ],
+      "metadata": {
+        "id": "E797aHV0dov9"
+      },
+      "execution_count": 3,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# 1. ติดตั้ง zstd ที่ระบบต้องการ และติดตั้ง Ollama\n",
+        "!sudo apt-get update && sudo apt-get install -y zstd\n",
+        "!curl -fsSL https://ollama.com/install.sh | sh\n",
+        "\n",
+        "# 2. เริ่มรัน Ollama server ในเบื้องหลัง (Background Process)\n",
+        "import subprocess\n",
+        "import time\n",
+        "\n",
+        "print(\"กำลังเริ่มต้นบริการ Ollama...\")\n",
+        "process = subprocess.Popen([\"ollama\", \"serve\"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)\n",
+        "time.sleep(5)  # รอให้เซิร์ฟเวอร์พร้อมใช้งาน\n",
+        "\n",
+        "# 3. ดาวน์โหลดโมเดล qwen2.5:7b\n",
+        "print(\"กำลังดาวน์โหลดโมเดล qwen2.5:7b (อาจใช้เวลาสักครู่)...\")\n",
+        "!ollama pull qwen2.5:7b\n",
+        "\n",
+        "# 4. ประกาศตัวแปร llm เพื่อให้พร้อมใช้งานกับ CrewAI\n",
+        "from crewai import LLM\n",
+        "llm = LLM(\n",
+        "    model=\"ollama/qwen2.5:7b\",\n",
+        "    base_url=\"http://localhost:11434\"\n",
+        ")\n",
+        "print(\"Ollama และโมเดล qwen2.5:7b พร้อมใช้งานแล้ว!\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Y19PZm4hdoJg",
+        "outputId": "9e206f42-6fcc-4188-b7fb-8de645d85480"
+      },
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\r0% [Working]\r            \rGet:1 https://cloud.r-project.org/bin/linux/ubuntu noble-cran40/ InRelease [3,631 B]\n",
+            "Get:2 https://cli.github.com/packages stable InRelease [3,917 B]\n",
+            "Get:3 https://r2u.stat.illinois.edu/ubuntu noble InRelease [9,161 B]\n",
+            "Get:4 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]\n",
+            "Hit:5 http://archive.ubuntu.com/ubuntu noble InRelease\n",
+            "Get:6 https://cli.github.com/packages stable/main amd64 Packages [357 B]\n",
+            "Get:7 http://archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]\n",
+            "Get:8 https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu noble InRelease [17.8 kB]\n",
+            "Get:9 https://r2u.stat.illinois.edu/ubuntu noble/main all Packages [10.5 MB]\n",
+            "Get:10 https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu noble/main amd64 Packages [60.0 kB]\n",
+            "Get:11 http://archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]\n",
+            "Get:12 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1,739 kB]\n",
+            "Get:13 http://archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [2,235 kB]\n",
+            "Get:14 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [2,172 kB]\n",
+            "Get:15 https://r2u.stat.illinois.edu/ubuntu noble/main amd64 Packages [3,097 kB]\n",
+            "Fetched 20.2 MB in 6s (3,131 kB/s)\n",
+            "Reading package lists... Done\n",
+            "W: Skipping acquire of configured file 'main/source/Sources' as repository 'https://r2u.stat.illinois.edu/ubuntu noble InRelease' does not seem to provide it (sources.list entry misspelt?)\n",
+            "Reading package lists... Done\n",
+            "Building dependency tree... Done\n",
+            "Reading state information... Done\n",
+            "The following NEW packages will be installed:\n",
+            "  zstd\n",
+            "0 upgraded, 1 newly installed, 0 to remove and 1 not upgraded.\n",
+            "Need to get 644 kB of archives.\n",
+            "After this operation, 1,845 kB of additional disk space will be used.\n",
+            "Get:1 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 zstd amd64 1.5.5+dfsg2-2build1.1 [644 kB]\n",
+            "Fetched 644 kB in 1s (469 kB/s)\n",
+            "debconf: unable to initialize frontend: Dialog\n",
+            "debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 79, <STDIN> line 1.)\n",
+            "debconf: falling back to frontend: Readline\n",
+            "debconf: unable to initialize frontend: Readline\n",
+            "debconf: (This frontend requires a controlling tty.)\n",
+            "debconf: falling back to frontend: Teletype\n",
+            "dpkg-preconfigure: unable to re-open stdin: \n",
+            "Selecting previously unselected package zstd.\n",
+            "(Reading database ... 122813 files and directories currently installed.)\n",
+            "Preparing to unpack .../zstd_1.5.5+dfsg2-2build1.1_amd64.deb ...\n",
+            "Unpacking zstd (1.5.5+dfsg2-2build1.1) ...\n",
+            "Setting up zstd (1.5.5+dfsg2-2build1.1) ...\n",
+            "Processing triggers for man-db (2.12.0-4build2) ...\n",
+            ">>> Cleaning up old version at /usr/local/lib/ollama\n",
+            ">>> Installing ollama to /usr/local\n",
+            ">>> Downloading ollama-linux-amd64.tar.zst\n",
+            "######################################################################## 100.0%\n",
+            ">>> Creating ollama user...\n",
+            ">>> Adding ollama user to video group...\n",
+            ">>> Adding current user to ollama group...\n",
+            ">>> Creating ollama systemd service...\n",
+            "\u001b[1m\u001b[31mWARNING:\u001b[m systemd is not running\n",
+            "\u001b[1m\u001b[31mWARNING:\u001b[m Unable to detect NVIDIA/AMD GPU. Install lspci or lshw to automatically detect and install GPU dependencies.\n",
+            ">>> The Ollama API is now available at 127.0.0.1:11434.\n",
+            ">>> Install complete. Run \"ollama\" from the command line.\n",
+            "กำลังเริ่มต้นบริการ Ollama...\n",
+            "กำลังดาวน์โหลดโมเดล qwen2.5:7b (อาจใช้เวลาสักครู่)...\n",
+            "\u001b[?2026h\u001b[?25l\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[A\u001b[A\u001b[A\u001b[1G\u001b[?25h\u001b[?2026l\n",
+            "Ollama และโมเดล qwen2.5:7b พร้อมใช้งานแล้ว!\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "ทดลองใช้งาน Crew AI"
+      ],
+      "metadata": {
+        "id": "yyAdor17fVE4"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "teacher_agent = Agent(\n",
+        "    llm = llm,\n",
+        "    role=\"Teacher\",\n",
+        "    goal=\"Educate students on various topics and provicde clear explantions.\",\n",
+        "    backstory=\"You are an experienced and patient teacher, dedicated to explanting complex concepts clearly and consisely.\",\n",
+        "    verbose=True,\n",
+        "    tools=[]\n",
+        ")\n",
+        ""
+      ],
+      "metadata": {
+        "id": "psSFxN88dnWy"
+      },
+      "execution_count": 16,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "สร้างtask"
+      ],
+      "metadata": {
+        "id": "AthTOSM1f3hY"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "task = Task(\n",
+        "    description=\"ตอนนี้เวลาที่ไทยปรปะมาณกี่โมง\",\n",
+        "    expected_output=\"Answer the general answers in Thai language.\",\n",
+        "    agent=teacher_agent\n",
+        ")"
+      ],
+      "metadata": {
+        "id": "FtDrLOEadoZ2"
+      },
+      "execution_count": 17,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "crew = Crew(\n",
+        "    agents=[teacher_agent],\n",
+        "    tasks=[task],\n",
+        "    verbose=True,\n",
+        ")"
+      ],
+      "metadata": {
+        "id": "HCjWGZTLoorI"
+      },
+      "execution_count": 18,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "try:\n",
+        "    # เรียกใช้งานแบบ Async\n",
+        "    result = await crew.kickoff_async()\n",
+        "    task_output = task.output\n",
+        "    print(\"สำเร็จ:\", result)\n",
+        "except Exception as e:\n",
+        "    print(f\"เกิดข้อผิดพลาดในการเชื่อมต่อ LLM (ตรวจสอบว่าคุณได้ตั้งค่า API Key หรือเปิดบริการ LLM แล้วหรือยัง):\\n{e}\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 1000
+        },
+        "id": "XPrVCGXAo0QE",
+        "outputId": "43843d4e-1cb7-497a-aafb-26d693c9b8db"
+      },
+      "execution_count": 19,
+      "outputs": [
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\u001b[36m╭─\u001b[0m\u001b[36m──────────────────────────────────────────\u001b[0m\u001b[36m 🚀 Crew Execution Started \u001b[0m\u001b[36m──────────────────────────────────────────\u001b[0m\u001b[36m─╮\u001b[0m\n",
+              "\u001b[36m│\u001b[0m                                                                                                                 \u001b[36m│\u001b[0m\n",
+              "\u001b[36m│\u001b[0m  \u001b[1;36mCrew Execution Started\u001b[0m                                                                                         \u001b[36m│\u001b[0m\n",
+              "\u001b[36m│\u001b[0m  \u001b[37mName: \u001b[0m\u001b[36mcrew\u001b[0m                                                                                                     \u001b[36m│\u001b[0m\n",
+              "\u001b[36m│\u001b[0m  \u001b[37mID: \u001b[0m\u001b[36m35727580-03ac-41ec-9ae0-d8204d36728b\u001b[0m                                                                       \u001b[36m│\u001b[0m\n",
+              "\u001b[36m│\u001b[0m                                                                                                                 \u001b[36m│\u001b[0m\n",
+              "\u001b[36m│\u001b[0m                                                                                                                 \u001b[36m│\u001b[0m\n",
+              "\u001b[36m╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯\u001b[0m\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"color: #008080; text-decoration-color: #008080\">╭─────────────────────────────────────────── 🚀 Crew Execution Started ───────────────────────────────────────────╮</span>\n",
+              "<span style=\"color: #008080; text-decoration-color: #008080\">│</span>                                                                                                                 <span style=\"color: #008080; text-decoration-color: #008080\">│</span>\n",
+              "<span style=\"color: #008080; text-decoration-color: #008080\">│</span>  <span style=\"color: #008080; text-decoration-color: #008080; font-weight: bold\">Crew Execution Started</span>                                                                                         <span style=\"color: #008080; text-decoration-color: #008080\">│</span>\n",
+              "<span style=\"color: #008080; text-decoration-color: #008080\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">Name: </span><span style=\"color: #008080; text-decoration-color: #008080\">crew</span>                                                                                                     <span style=\"color: #008080; text-decoration-color: #008080\">│</span>\n",
+              "<span style=\"color: #008080; text-decoration-color: #008080\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">ID: </span><span style=\"color: #008080; text-decoration-color: #008080\">35727580-03ac-41ec-9ae0-d8204d36728b</span>                                                                       <span style=\"color: #008080; text-decoration-color: #008080\">│</span>\n",
+              "<span style=\"color: #008080; text-decoration-color: #008080\">│</span>                                                                                                                 <span style=\"color: #008080; text-decoration-color: #008080\">│</span>\n",
+              "<span style=\"color: #008080; text-decoration-color: #008080\">│</span>                                                                                                                 <span style=\"color: #008080; text-decoration-color: #008080\">│</span>\n",
+              "<span style=\"color: #008080; text-decoration-color: #008080\">╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯</span>\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\u001b[33m╭─\u001b[0m\u001b[33m───────────────────────────────────────────────\u001b[0m\u001b[33m 📋 Task Started \u001b[0m\u001b[33m───────────────────────────────────────────────\u001b[0m\u001b[33m─╮\u001b[0m\n",
+              "\u001b[33m│\u001b[0m                                                                                                                 \u001b[33m│\u001b[0m\n",
+              "\u001b[33m│\u001b[0m  \u001b[1;33mTask Started\u001b[0m                                                                                                   \u001b[33m│\u001b[0m\n",
+              "\u001b[33m│\u001b[0m  \u001b[37mName: \u001b[0m\u001b[33mตอนนี้เวลาที่ไทยปรปะมาณกี่โมง\u001b[0m                                                                                  \u001b[33m│\u001b[0m\n",
+              "\u001b[33m│\u001b[0m  \u001b[37mID: \u001b[0m\u001b[33mf715a2b5-37b0-49be-a714-19acd713c2e9\u001b[0m                                                                       \u001b[33m│\u001b[0m\n",
+              "\u001b[33m│\u001b[0m                                                                                                                 \u001b[33m│\u001b[0m\n",
+              "\u001b[33m│\u001b[0m                                                                                                                 \u001b[33m│\u001b[0m\n",
+              "\u001b[33m╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯\u001b[0m\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"color: #808000; text-decoration-color: #808000\">╭──────────────────────────────────────────────── 📋 Task Started ────────────────────────────────────────────────╮</span>\n",
+              "<span style=\"color: #808000; text-decoration-color: #808000\">│</span>                                                                                                                 <span style=\"color: #808000; text-decoration-color: #808000\">│</span>\n",
+              "<span style=\"color: #808000; text-decoration-color: #808000\">│</span>  <span style=\"color: #808000; text-decoration-color: #808000; font-weight: bold\">Task Started</span>                                                                                                   <span style=\"color: #808000; text-decoration-color: #808000\">│</span>\n",
+              "<span style=\"color: #808000; text-decoration-color: #808000\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">Name: </span><span style=\"color: #808000; text-decoration-color: #808000\">ตอนนี้เวลาที่ไทยปรปะมาณกี่โมง</span>                                                                                  <span style=\"color: #808000; text-decoration-color: #808000\">│</span>\n",
+              "<span style=\"color: #808000; text-decoration-color: #808000\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">ID: </span><span style=\"color: #808000; text-decoration-color: #808000\">f715a2b5-37b0-49be-a714-19acd713c2e9</span>                                                                       <span style=\"color: #808000; text-decoration-color: #808000\">│</span>\n",
+              "<span style=\"color: #808000; text-decoration-color: #808000\">│</span>                                                                                                                 <span style=\"color: #808000; text-decoration-color: #808000\">│</span>\n",
+              "<span style=\"color: #808000; text-decoration-color: #808000\">│</span>                                                                                                                 <span style=\"color: #808000; text-decoration-color: #808000\">│</span>\n",
+              "<span style=\"color: #808000; text-decoration-color: #808000\">╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯</span>\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "WARNING:crewai.llms.base_llm:Using an approximate input token count for model 'qwen2.5:7b': assuming one token per four characters because a native token count is unavailable.\n"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\u001b[35m╭─\u001b[0m\u001b[35m──────────────────────────────────────────────\u001b[0m\u001b[35m 🤖 Agent Started \u001b[0m\u001b[35m───────────────────────────────────────────────\u001b[0m\u001b[35m─╮\u001b[0m\n",
+              "\u001b[35m│\u001b[0m                                                                                                                 \u001b[35m│\u001b[0m\n",
+              "\u001b[35m│\u001b[0m  \u001b[37mAgent: \u001b[0m\u001b[1;92mTeacher\u001b[0m                                                                                                 \u001b[35m│\u001b[0m\n",
+              "\u001b[35m│\u001b[0m                                                                                                                 \u001b[35m│\u001b[0m\n",
+              "\u001b[35m│\u001b[0m  \u001b[37mTask: \u001b[0m\u001b[92mตอนนี้เวลาที่ไทยปรปะมาณกี่โมง\u001b[0m                                                                                  \u001b[35m│\u001b[0m\n",
+              "\u001b[35m│\u001b[0m                                                                                                                 \u001b[35m│\u001b[0m\n",
+              "\u001b[35m╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯\u001b[0m\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"color: #800080; text-decoration-color: #800080\">╭─────────────────────────────────────────────── 🤖 Agent Started ────────────────────────────────────────────────╮</span>\n",
+              "<span style=\"color: #800080; text-decoration-color: #800080\">│</span>                                                                                                                 <span style=\"color: #800080; text-decoration-color: #800080\">│</span>\n",
+              "<span style=\"color: #800080; text-decoration-color: #800080\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">Agent: </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">Teacher</span>                                                                                                 <span style=\"color: #800080; text-decoration-color: #800080\">│</span>\n",
+              "<span style=\"color: #800080; text-decoration-color: #800080\">│</span>                                                                                                                 <span style=\"color: #800080; text-decoration-color: #800080\">│</span>\n",
+              "<span style=\"color: #800080; text-decoration-color: #800080\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">Task: </span><span style=\"color: #00ff00; text-decoration-color: #00ff00\">ตอนนี้เวลาที่ไทยปรปะมาณกี่โมง</span>                                                                                  <span style=\"color: #800080; text-decoration-color: #800080\">│</span>\n",
+              "<span style=\"color: #800080; text-decoration-color: #800080\">│</span>                                                                                                                 <span style=\"color: #800080; text-decoration-color: #800080\">│</span>\n",
+              "<span style=\"color: #800080; text-decoration-color: #800080\">╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯</span>\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\u001b[35m[Finalize] todos_count=0, todos_with_results=0\u001b[0m\n"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\u001b[32m╭─\u001b[0m\u001b[32m────────────────────────────────────────────\u001b[0m\u001b[32m ✅ Agent Final Answer \u001b[0m\u001b[32m────────────────────────────────────────────\u001b[0m\u001b[32m─╮\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[37mAgent: \u001b[0m\u001b[1;92mTeacher\u001b[0m                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[37mFinal Answer:\u001b[0m                                                                                                  \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[92mตอนนี้เวลาในประเทศไทยเป็นเวลาที่เปลี่ยนแปลงตามเขตเวลาของแต่ละพื้นที่ โดยมีแนวคิดหลักคือ:\u001b[0m                                       \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[92m1. เขตเวลามาตรฐานประเทศไทย (ICT): หรือชื่อเดิมคือ เขตเวลามาตรฐานอาณานิคม (ICT), \u001b[0m                                     \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[92mเป็นเวลาที่มีน้ำหนักทางประวัติศาสตร์และวัฒนธรรมมาก เข้าสู่เวลา utc+7\u001b[0m                                                        \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[92m2. เขตเวลามาตรฐานทิศตะวันออกสอง (EAT+2): หรือเวลาที่ใช้ในจังหวัดชายแดนภาคใต้ ซึ่งเป็นเวลา utc+9 พร้อมกับประเทศเพื่อนบ้าน\u001b[0m        \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[92mดังนั้น ณ ขณะนี้เวลาในประเทศไทย (ยกเว้นจังหวัดชายแดนภาคใต้) คือ ตีนี่ที่ 7 นั่นเอง หรือเขียนในรูปแบบดิจิตอลคือ 23:00 น.\u001b[0m               \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯\u001b[0m\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"color: #008000; text-decoration-color: #008000\">╭───────────────────────────────────────────── ✅ Agent Final Answer ─────────────────────────────────────────────╮</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">Agent: </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">Teacher</span>                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">Final Answer:</span>                                                                                                  <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #00ff00; text-decoration-color: #00ff00\">ตอนนี้เวลาในประเทศไทยเป็นเวลาที่เปลี่ยนแปลงตามเขตเวลาของแต่ละพื้นที่ โดยมีแนวคิดหลักคือ:</span>                                       <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #00ff00; text-decoration-color: #00ff00\">1. เขตเวลามาตรฐานประเทศไทย (ICT): หรือชื่อเดิมคือ เขตเวลามาตรฐานอาณานิคม (ICT), </span>                                     <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #00ff00; text-decoration-color: #00ff00\">เป็นเวลาที่มีน้ำหนักทางประวัติศาสตร์และวัฒนธรรมมาก เข้าสู่เวลา utc+7</span>                                                        <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #00ff00; text-decoration-color: #00ff00\">2. เขตเวลามาตรฐานทิศตะวันออกสอง (EAT+2): หรือเวลาที่ใช้ในจังหวัดชายแดนภาคใต้ ซึ่งเป็นเวลา utc+9 พร้อมกับประเทศเพื่อนบ้าน</span>        <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #00ff00; text-decoration-color: #00ff00\">ดังนั้น ณ ขณะนี้เวลาในประเทศไทย (ยกเว้นจังหวัดชายแดนภาคใต้) คือ ตีนี่ที่ 7 นั่นเอง หรือเขียนในรูปแบบดิจิตอลคือ 23:00 น.</span>               <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯</span>\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\u001b[32m╭─\u001b[0m\u001b[32m─────────────────────────────────────────────\u001b[0m\u001b[32m 📋 Task Completion \u001b[0m\u001b[32m──────────────────────────────────────────────\u001b[0m\u001b[32m─╮\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[1;32mTask Completed\u001b[0m                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[37mName: \u001b[0m\u001b[32mตอนนี้เวลาที่ไทยปรปะมาณกี่โมง\u001b[0m                                                                                  \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[37mAgent: \u001b[0m\u001b[32mTeacher\u001b[0m                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯\u001b[0m\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"color: #008000; text-decoration-color: #008000\">╭────────────────────────────────────────────── 📋 Task Completion ───────────────────────────────────────────────╮</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #008000; text-decoration-color: #008000; font-weight: bold\">Task Completed</span>                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">Name: </span><span style=\"color: #008000; text-decoration-color: #008000\">ตอนนี้เวลาที่ไทยปรปะมาณกี่โมง</span>                                                                                  <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">Agent: </span><span style=\"color: #008000; text-decoration-color: #008000\">Teacher</span>                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯</span>\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\u001b[32m╭─\u001b[0m\u001b[32m───────────────────────────────────────────────\u001b[0m\u001b[32m Crew Completion \u001b[0m\u001b[32m───────────────────────────────────────────────\u001b[0m\u001b[32m─╮\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[1;32mCrew Execution Completed\u001b[0m                                                                                       \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[37mName: \u001b[0m\u001b[32mcrew\u001b[0m                                                                                                     \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[37mID: \u001b[0m\u001b[32m35727580-03ac-41ec-9ae0-d8204d36728b\u001b[0m                                                                       \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[37mFinal Output: ตอนนี้เวลาในประเทศไทยเป็นเวลาที่เปลี่ยนแปลงตามเขตเวลาของแต่ละพื้นที่ โดยมีแนวคิดหลักคือ:\u001b[0m                         \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[37m1. เขตเวลามาตรฐานประเทศไทย (ICT): หรือชื่อเดิมคือ เขตเวลามาตรฐานอาณานิคม (ICT), \u001b[0m                                     \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[37mเป็นเวลาที่มีน้ำหนักทางประวัติศาสตร์และวัฒนธรรมมาก เข้าสู่เวลา utc+7\u001b[0m                                                        \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[37m2. เขตเวลามาตรฐานทิศตะวันออกสอง (EAT+2): หรือเวลาที่ใช้ในจังหวัดชายแดนภาคใต้ ซึ่งเป็นเวลา utc+9 พร้อมกับประเทศเพื่อนบ้าน\u001b[0m        \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[37mดังนั้น ณ ขณะนี้เวลาในประเทศไทย (ยกเว้นจังหวัดชายแดนภาคใต้) คือ ตีนี่ที่ 7 นั่นเอง หรือเขียนในรูปแบบดิจิตอลคือ 23:00 น.\u001b[0m               \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯\u001b[0m\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"color: #008000; text-decoration-color: #008000\">╭──────────────────────────────────────────────── Crew Completion ────────────────────────────────────────────────╮</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #008000; text-decoration-color: #008000; font-weight: bold\">Crew Execution Completed</span>                                                                                       <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">Name: </span><span style=\"color: #008000; text-decoration-color: #008000\">crew</span>                                                                                                     <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">ID: </span><span style=\"color: #008000; text-decoration-color: #008000\">35727580-03ac-41ec-9ae0-d8204d36728b</span>                                                                       <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">Final Output: ตอนนี้เวลาในประเทศไทยเป็นเวลาที่เปลี่ยนแปลงตามเขตเวลาของแต่ละพื้นที่ โดยมีแนวคิดหลักคือ:</span>                         <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">1. เขตเวลามาตรฐานประเทศไทย (ICT): หรือชื่อเดิมคือ เขตเวลามาตรฐานอาณานิคม (ICT), </span>                                     <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">เป็นเวลาที่มีน้ำหนักทางประวัติศาสตร์และวัฒนธรรมมาก เข้าสู่เวลา utc+7</span>                                                        <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">2. เขตเวลามาตรฐานทิศตะวันออกสอง (EAT+2): หรือเวลาที่ใช้ในจังหวัดชายแดนภาคใต้ ซึ่งเป็นเวลา utc+9 พร้อมกับประเทศเพื่อนบ้าน</span>        <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">ดังนั้น ณ ขณะนี้เวลาในประเทศไทย (ยกเว้นจังหวัดชายแดนภาคใต้) คือ ตีนี่ที่ 7 นั่นเอง หรือเขียนในรูปแบบดิจิตอลคือ 23:00 น.</span>               <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯</span>\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "สำเร็จ: ตอนนี้เวลาในประเทศไทยเป็นเวลาที่เปลี่ยนแปลงตามเขตเวลาของแต่ละพื้นที่ โดยมีแนวคิดหลักคือ:\n",
+            "\n",
+            "1. เขตเวลามาตรฐานประเทศไทย (ICT): หรือชื่อเดิมคือ เขตเวลามาตรฐานอาณานิคม (ICT), เป็นเวลาที่มีน้ำหนักทางประวัติศาสตร์และวัฒนธรรมมาก เข้าสู่เวลา utc+7\n",
+            "\n",
+            "2. เขตเวลามาตรฐานทิศตะวันออกสอง (EAT+2): หรือเวลาที่ใช้ในจังหวัดชายแดนภาคใต้ ซึ่งเป็นเวลา utc+9 พร้อมกับประเทศเพื่อนบ้าน\n",
+            "\n",
+            "ดังนั้น ณ ขณะนี้เวลาในประเทศไทย (ยกเว้นจังหวัดชายแดนภาคใต้) คือ ตีนี่ที่ 7 นั่นเอง หรือเขียนในรูปแบบดิจิตอลคือ 23:00 น.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "class TimeTool(BaseTool):\n",
+        "    name: str = \"time_tool\"\n",
+        "    description: str = (\n",
+        "        \"Useful for getting current date and time information \"\n",
+        "        \"in Thailand timezone. Input should be a natural language.\"\n",
+        "    )\n",
+        "\n",
+        "    def _run(self, *args, **kwargs):\n",
+        "        thailand_tz = pytz.timezone(\"Asia/Bangkok\")\n",
+        "        current_time = datetime.now(thailand_tz)\n",
+        "\n",
+        "        return (\n",
+        "            f\"Current datetime in Thailand:\\n\"\n",
+        "            f\"Date      : {current_time.strftime('%Y-%m-%d')}\\n\"\n",
+        "            f\"Time      : {current_time.strftime('%H:%M:%S')}\\n\"\n",
+        "            f\"Timezone  : {current_time.strftime('%Z %z')}\"\n",
+        "        )"
+      ],
+      "metadata": {
+        "id": "A2TJDEGSrG2K"
+      },
+      "execution_count": 22,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from IPython.core.completer import back_latex_name_matches\n",
+        "time_agent = Agent(\n",
+        "    llm = llm,\n",
+        "    role=\"Teacher\",\n",
+        "    goal=\"Answer questions about current date, and scheduling based on Thailand timezone\",\n",
+        "    backstory = \"You are a helpful assistant specialized in time management and scheduling. \"\n",
+        "                \"You always use the time_tool to get accurate current time before answering. \",\n",
+        "    verbose=True,\n",
+        "    tools=[TimeTool()]\n",
+        ")\n",
+        "\n",
+        "task = Task(\n",
+        "    description=\"ตอนนี้เวลาที่ไทยปรปะมาณกี่โมง\",\n",
+        "    expected_output=\"Answer the general answers in Thai language.\",\n",
+        "    agent=time_agent\n",
+        ")\n",
+        "\n",
+        "crew = Crew(\n",
+        "    agents=[time_agent],\n",
+        "    tasks=[task],\n",
+        ")\n"
+      ],
+      "metadata": {
+        "id": "ZCFYPaZjsLVJ"
+      },
+      "execution_count": 24,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "result = await crew.kickoff_async()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 376
+        },
+        "id": "ItUk0wI8tqmA",
+        "outputId": "deda0949-aae0-4d96-93c5-434dda48ed37"
+      },
+      "execution_count": 28,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "WARNING:crewai.llms.base_llm:Using an approximate input token count for model 'qwen2.5:7b': assuming one token per four characters because a native token count is unavailable.\n"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\u001b[35m╭─\u001b[0m\u001b[35m──────────────────────────────────────────────\u001b[0m\u001b[35m 🤖 Agent Started \u001b[0m\u001b[35m───────────────────────────────────────────────\u001b[0m\u001b[35m─╮\u001b[0m\n",
+              "\u001b[35m│\u001b[0m                                                                                                                 \u001b[35m│\u001b[0m\n",
+              "\u001b[35m│\u001b[0m  \u001b[37mAgent: \u001b[0m\u001b[1;92mTeacher\u001b[0m                                                                                                 \u001b[35m│\u001b[0m\n",
+              "\u001b[35m│\u001b[0m                                                                                                                 \u001b[35m│\u001b[0m\n",
+              "\u001b[35m│\u001b[0m  \u001b[37mTask: \u001b[0m\u001b[92mตอนนี้เวลาที่ไทยปรปะมาณกี่โมง\u001b[0m                                                                                  \u001b[35m│\u001b[0m\n",
+              "\u001b[35m│\u001b[0m                                                                                                                 \u001b[35m│\u001b[0m\n",
+              "\u001b[35m╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯\u001b[0m\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"color: #800080; text-decoration-color: #800080\">╭─────────────────────────────────────────────── 🤖 Agent Started ────────────────────────────────────────────────╮</span>\n",
+              "<span style=\"color: #800080; text-decoration-color: #800080\">│</span>                                                                                                                 <span style=\"color: #800080; text-decoration-color: #800080\">│</span>\n",
+              "<span style=\"color: #800080; text-decoration-color: #800080\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">Agent: </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">Teacher</span>                                                                                                 <span style=\"color: #800080; text-decoration-color: #800080\">│</span>\n",
+              "<span style=\"color: #800080; text-decoration-color: #800080\">│</span>                                                                                                                 <span style=\"color: #800080; text-decoration-color: #800080\">│</span>\n",
+              "<span style=\"color: #800080; text-decoration-color: #800080\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">Task: </span><span style=\"color: #00ff00; text-decoration-color: #00ff00\">ตอนนี้เวลาที่ไทยปรปะมาณกี่โมง</span>                                                                                  <span style=\"color: #800080; text-decoration-color: #800080\">│</span>\n",
+              "<span style=\"color: #800080; text-decoration-color: #800080\">│</span>                                                                                                                 <span style=\"color: #800080; text-decoration-color: #800080\">│</span>\n",
+              "<span style=\"color: #800080; text-decoration-color: #800080\">╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯</span>\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "WARNING:crewai.llms.base_llm:Using an approximate input token count for model 'qwen2.5:7b': assuming one token per four characters because a native token count is unavailable.\n",
+            "WARNING:crewai.llms.base_llm:Using an approximate input token count for model 'qwen2.5:7b': assuming one token per four characters because a native token count is unavailable.\n"
+          ]
+        },
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\u001b[35m[Finalize] todos_count=0, todos_with_results=0\u001b[0m\n"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\u001b[32m╭─\u001b[0m\u001b[32m────────────────────────────────────────────\u001b[0m\u001b[32m ✅ Agent Final Answer \u001b[0m\u001b[32m────────────────────────────────────────────\u001b[0m\u001b[32m─╮\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[37mAgent: \u001b[0m\u001b[1;92mTeacher\u001b[0m                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[37mFinal Answer:\u001b[0m                                                                                                  \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m  \u001b[92mตอนนี้ในประเทศไทยเวลาคือ 01:18 น.\u001b[0m                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m│\u001b[0m                                                                                                                 \u001b[32m│\u001b[0m\n",
+              "\u001b[32m╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯\u001b[0m\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\"><span style=\"color: #008000; text-decoration-color: #008000\">╭───────────────────────────────────────────── ✅ Agent Final Answer ─────────────────────────────────────────────╮</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">Agent: </span><span style=\"color: #00ff00; text-decoration-color: #00ff00; font-weight: bold\">Teacher</span>                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #c0c0c0; text-decoration-color: #c0c0c0\">Final Answer:</span>                                                                                                  <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>  <span style=\"color: #00ff00; text-decoration-color: #00ff00\">ตอนนี้ในประเทศไทยเวลาคือ 01:18 น.</span>                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">│</span>                                                                                                                 <span style=\"color: #008000; text-decoration-color: #008000\">│</span>\n",
+              "<span style=\"color: #008000; text-decoration-color: #008000\">╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯</span>\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "\n"
+            ],
+            "text/html": [
+              "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">\n",
+              "</pre>\n"
+            ]
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "8a35b9ba",
+        "outputId": "64190f61-df0e-4026-f406-ab185a59c525"
+      },
+      "source": [
+        "# พิมพ์ผลลัพธ์ที่ได้จาก CrewAI ออกมาแสดง\n",
+        "print(result)"
+      ],
+      "execution_count": 33,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "ตอนนี้ในประเทศไทยเวลาคือ 01:18 น.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "5.Market Research ด้วย Mult-agent\n",
+        "* Tavily Search - http://docs.crewai.com/en/tools/search/tavilysearhtool"
+      ],
+      "metadata": {
+        "id": "jp7scu3RwyHh"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install tavily-python"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "55FllTctxSDY",
+        "outputId": "ea483972-3006-4136-aeb7-1e964ab1177f"
+      },
+      "execution_count": 30,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Collecting tavily-python\n",
+            "  Downloading tavily_python-0.8.5-py3-none-any.whl.metadata (14 kB)\n",
+            "Requirement already satisfied: requests in /usr/local/lib/python3.13/dist-packages (from tavily-python) (2.32.4)\n",
+            "Requirement already satisfied: tiktoken>=0.5.1 in /usr/local/lib/python3.13/dist-packages (from tavily-python) (0.14.0)\n",
+            "Requirement already satisfied: httpx in /usr/local/lib/python3.13/dist-packages (from tavily-python) (0.28.1)\n",
+            "Requirement already satisfied: regex in /usr/local/lib/python3.13/dist-packages (from tiktoken>=0.5.1->tavily-python) (2026.1.15)\n",
+            "Requirement already satisfied: anyio in /usr/local/lib/python3.13/dist-packages (from httpx->tavily-python) (4.15.1)\n",
+            "Requirement already satisfied: certifi in /usr/local/lib/python3.13/dist-packages (from httpx->tavily-python) (2026.10.23)\n",
+            "Requirement already satisfied: httpcore==1.* in /usr/local/lib/python3.13/dist-packages (from httpx->tavily-python) (1.0.9)\n",
+            "Requirement already satisfied: idna in /usr/local/lib/python3.13/dist-packages (from httpx->tavily-python) (3.20)\n",
+            "Requirement already satisfied: h11>=0.16 in /usr/local/lib/python3.13/dist-packages (from httpcore==1.*->httpx->tavily-python) (0.16.0)\n",
+            "Requirement already satisfied: typing_extensions>=4.16.0 in /usr/local/lib/python3.13/dist-packages (from anyio->httpx->tavily-python) (4.16.0)\n",
+            "Requirement already satisfied: charset_normalizer<4,>=2 in /usr/local/lib/python3.13/dist-packages (from requests->tavily-python) (3.4.9)\n",
+            "Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.13/dist-packages (from requests->tavily-python) (2.5.0)\n",
+            "Downloading tavily_python-0.8.5-py3-none-any.whl (24 kB)\n",
+            "Installing collected packages: tavily-python\n",
+            "Successfully installed tavily-python-0.8.5\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install crewai-tools\n",
+        "\n",
+        "import os\n",
+        "from crewai import LLM, Task, Agent, Crew\n",
+        "from crewai.tools import BaseTool\n",
+        "from crewai_tools import TavilySearchTool\n",
+        "from datetime import datetime\n",
+        "import pytz\n",
+        "\n",
+        "os.environ['TAVILY_API_KEY'] = \"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\"\n",
+        "tavily_tool = TavilySearchTool()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "EI2t28dExqRl",
+        "outputId": "87704611-402d-42d8-a23f-4b84813cd50d"
+      },
+      "execution_count": 1,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Requirement already satisfied: crewai-tools in /usr/local/lib/python3.13/dist-packages (1.15.32)\n",
+            "Requirement already satisfied: beautifulsoup4<5,>=4.13.4 in /usr/local/lib/python3.13/dist-packages (from crewai-tools) (4.13.5)\n",
+            "Requirement already satisfied: crewai==1.15.32 in /usr/local/lib/python3.13/dist-packages (from crewai-tools) (1.15.32)\n",
+            "Requirement already satisfied: pymupdf~=1.26.6 in /usr/local/lib/python3.13/dist-packages (from crewai-tools) (1.26.7)\n",
+            "Requirement already satisfied: python-docx~=1.2.0 in /usr/local/lib/python3.13/dist-packages (from crewai-tools) (1.2.0)\n",
+            "Requirement already satisfied: pytube~=15.0.0 in /usr/local/lib/python3.13/dist-packages (from crewai-tools) (15.0.0)\n",
+            "Requirement already satisfied: requests<3,>=2.33.0 in /usr/local/lib/python3.13/dist-packages (from crewai-tools) (2.34.2)\n",
+            "Requirement already satisfied: tiktoken<0.13,>=0.8.0 in /usr/local/lib/python3.13/dist-packages (from crewai-tools) (0.12.0)\n",
+            "Requirement already satisfied: youtube-transcript-api~=1.2.2 in /usr/local/lib/python3.13/dist-packages (from crewai-tools) (1.2.4)\n",
+            "Requirement already satisfied: aiofiles~=24.1.0 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (24.1.0)\n",
+            "Requirement already satisfied: aiosqlite~=0.21.0 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (0.21.0)\n",
+            "Requirement already satisfied: appdirs~=1.4.4 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (1.4.4)\n",
+            "Requirement already satisfied: cel-python<0.6,>=0.5.0 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (0.5.0)\n",
+            "Requirement already satisfied: chromadb~=1.5.9 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (1.5.9)\n",
+            "Requirement already satisfied: click<9,>=8.1.7 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (8.5.0)\n",
+            "Requirement already satisfied: crewai-cli==1.15.32 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (1.15.32)\n",
+            "Requirement already satisfied: crewai-core==1.15.32 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (1.15.32)\n",
+            "Requirement already satisfied: httpx~=0.28.1 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (0.28.1)\n",
+            "Requirement already satisfied: instructor<1.16,>=1.3.3 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (1.15.4)\n",
+            "Requirement already satisfied: json-repair~=0.60.1 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (0.60.1)\n",
+            "Requirement already satisfied: json5~=0.10.0 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (0.10.0)\n",
+            "Requirement already satisfied: jsonref~=1.1.0 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (1.1.0)\n",
+            "Requirement already satisfied: lancedb<1.0.0,>=0.33.0 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (0.40.0)\n",
+            "Requirement already satisfied: mcp<2,>=1.30.0 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (1.30.0)\n",
+            "Requirement already satisfied: oauthlib<5,>=4.0.0 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (4.0.0)\n",
+            "Requirement already satisfied: openai<3,>=2.30.0 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (2.54.0)\n",
+            "Requirement already satisfied: openpyxl~=3.1.5 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (3.1.5)\n",
+            "Requirement already satisfied: opentelemetry-api<2,>=1.45.1 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (1.45.1)\n",
+            "Requirement already satisfied: opentelemetry-exporter-otlp-proto-http<2,>=1.45.1 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (1.45.1)\n",
+            "Requirement already satisfied: opentelemetry-sdk<2,>=1.45.1 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (1.45.1)\n",
+            "Requirement already satisfied: pdfplumber~=0.11.4 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (0.11.10)\n",
+            "Requirement already satisfied: portalocker~=2.7.0 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (2.7.0)\n",
+            "Requirement already satisfied: pydantic-settings<3,>=2.14.2 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (2.16.2)\n",
+            "Requirement already satisfied: pydantic<2.13,>=2.11.9 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (2.12.5)\n",
+            "Requirement already satisfied: pyjwt<3,>=2.15.0 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (2.15.1)\n",
+            "Requirement already satisfied: python-dotenv<2,>=1.2.2 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (1.2.4)\n",
+            "Requirement already satisfied: pyyaml~=6.0 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (6.0.3)\n",
+            "Requirement already satisfied: regex~=2026.1.15 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (2026.1.15)\n",
+            "Requirement already satisfied: tokenizers<1,>=0.21 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (0.23.3)\n",
+            "Requirement already satisfied: tomli-w~=1.1.0 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (1.1.0)\n",
+            "Requirement already satisfied: tomli~=2.0.2 in /usr/local/lib/python3.13/dist-packages (from crewai==1.15.32->crewai-tools) (2.0.2)\n",
+            "Requirement already satisfied: certifi>=2026.10.18 in /usr/local/lib/python3.13/dist-packages (from crewai-cli==1.15.32->crewai==1.15.32->crewai-tools) (2026.10.23)\n",
+            "Requirement already satisfied: cryptography>=42.0 in /usr/local/lib/python3.13/dist-packages (from crewai-cli==1.15.32->crewai==1.15.32->crewai-tools) (50.0.2)\n",
+            "Requirement already satisfied: packaging>=23.0 in /usr/local/lib/python3.13/dist-packages (from crewai-cli==1.15.32->crewai==1.15.32->crewai-tools) (26.3)\n",
+            "Requirement already satisfied: rich>=13.7.1 in /usr/local/lib/python3.13/dist-packages (from crewai-cli==1.15.32->crewai==1.15.32->crewai-tools) (14.3.4)\n",
+            "Requirement already satisfied: textual>=7.5.0 in /usr/local/lib/python3.13/dist-packages (from crewai-cli==1.15.32->crewai==1.15.32->crewai-tools) (8.2.8)\n",
+            "Requirement already satisfied: uv<1,>=0.13.4 in /usr/local/lib/python3.13/dist-packages (from crewai-cli==1.15.32->crewai==1.15.32->crewai-tools) (0.13.6)\n",
+            "Requirement already satisfied: typing_extensions>=4.0 in /usr/local/lib/python3.13/dist-packages (from aiosqlite~=0.21.0->crewai==1.15.32->crewai-tools) (4.16.0)\n",
+            "Requirement already satisfied: soupsieve>1.2 in /usr/local/lib/python3.13/dist-packages (from beautifulsoup4<5,>=4.13.4->crewai-tools) (3.0.4)\n",
+            "Requirement already satisfied: google-re2>=1.1.20240702 in /usr/local/lib/python3.13/dist-packages (from cel-python<0.6,>=0.5.0->crewai==1.15.32->crewai-tools) (1.1.20251105)\n",
+            "Requirement already satisfied: jmespath>=1.0.1 in /usr/local/lib/python3.13/dist-packages (from cel-python<0.6,>=0.5.0->crewai==1.15.32->crewai-tools) (1.1.0)\n",
+            "Requirement already satisfied: lark>=1.2.2 in /usr/local/lib/python3.13/dist-packages (from cel-python<0.6,>=0.5.0->crewai==1.15.32->crewai-tools) (1.3.1)\n",
+            "Requirement already satisfied: pendulum>=3.1.0 in /usr/local/lib/python3.13/dist-packages (from cel-python<0.6,>=0.5.0->crewai==1.15.32->crewai-tools) (3.3.0)\n",
+            "Requirement already satisfied: build>=1.0.3 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (1.6.1)\n",
+            "Requirement already satisfied: pybase64>=1.4.1 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (1.5.1)\n",
+            "Requirement already satisfied: uvicorn>=0.18.3 in /usr/local/lib/python3.13/dist-packages (from uvicorn[standard]>=0.18.3->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (0.54.0)\n",
+            "Requirement already satisfied: numpy>=1.22.5 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (2.1.3)\n",
+            "Requirement already satisfied: onnxruntime>=1.14.1 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (1.31.1)\n",
+            "Requirement already satisfied: opentelemetry-exporter-otlp-proto-grpc>=1.2.0 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (1.45.1)\n",
+            "Requirement already satisfied: pypika>=0.48.9 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (0.51.1)\n",
+            "Requirement already satisfied: tqdm>=4.65.0 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (4.67.3)\n",
+            "Requirement already satisfied: overrides>=7.3.1 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (7.7.0)\n",
+            "Requirement already satisfied: importlib-resources in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (7.1.0)\n",
+            "Requirement already satisfied: grpcio>=1.58.0 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (1.84.1)\n",
+            "Requirement already satisfied: bcrypt>=4.0.1 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (5.0.0)\n",
+            "Requirement already satisfied: typer>=0.9.0 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (0.27.3)\n",
+            "Requirement already satisfied: kubernetes>=28.1.0 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (36.0.3)\n",
+            "Requirement already satisfied: tenacity>=8.2.3 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (9.1.4)\n",
+            "Requirement already satisfied: mmh3>=4.0.1 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (5.3.1)\n",
+            "Requirement already satisfied: orjson>=3.9.12 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (3.13.0)\n",
+            "Requirement already satisfied: jsonschema>=4.19.0 in /usr/local/lib/python3.13/dist-packages (from chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (4.26.0)\n",
+            "Requirement already satisfied: anyio in /usr/local/lib/python3.13/dist-packages (from httpx~=0.28.1->crewai==1.15.32->crewai-tools) (4.15.1)\n",
+            "Requirement already satisfied: httpcore==1.* in /usr/local/lib/python3.13/dist-packages (from httpx~=0.28.1->crewai==1.15.32->crewai-tools) (1.0.9)\n",
+            "Requirement already satisfied: idna in /usr/local/lib/python3.13/dist-packages (from httpx~=0.28.1->crewai==1.15.32->crewai-tools) (3.20)\n",
+            "Requirement already satisfied: h11>=0.16 in /usr/local/lib/python3.13/dist-packages (from httpcore==1.*->httpx~=0.28.1->crewai==1.15.32->crewai-tools) (0.16.0)\n",
+            "Requirement already satisfied: aiohttp<4.0.0,>=3.9.1 in /usr/local/lib/python3.13/dist-packages (from instructor<1.16,>=1.3.3->crewai==1.15.32->crewai-tools) (3.14.5)\n",
+            "Requirement already satisfied: docstring-parser<1.0,>=0.16 in /usr/local/lib/python3.13/dist-packages (from instructor<1.16,>=1.3.3->crewai==1.15.32->crewai-tools) (0.18.0)\n",
+            "Requirement already satisfied: jinja2<4.0.0,>=3.1.4 in /usr/local/lib/python3.13/dist-packages (from instructor<1.16,>=1.3.3->crewai==1.15.32->crewai-tools) (3.1.6)\n",
+            "Requirement already satisfied: jiter<0.15,>=0.6.1 in /usr/local/lib/python3.13/dist-packages (from instructor<1.16,>=1.3.3->crewai==1.15.32->crewai-tools) (0.14.0)\n",
+            "Requirement already satisfied: pydantic-core<3.0.0,>=2.18.0 in /usr/local/lib/python3.13/dist-packages (from instructor<1.16,>=1.3.3->crewai==1.15.32->crewai-tools) (2.41.5)\n",
+            "Requirement already satisfied: aiohappyeyeballs>=2.5.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp<4.0.0,>=3.9.1->instructor<1.16,>=1.3.3->crewai==1.15.32->crewai-tools) (2.7.1)\n",
+            "Requirement already satisfied: aiosignal>=1.4.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp<4.0.0,>=3.9.1->instructor<1.16,>=1.3.3->crewai==1.15.32->crewai-tools) (1.4.0)\n",
+            "Requirement already satisfied: attrs>=17.3.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp<4.0.0,>=3.9.1->instructor<1.16,>=1.3.3->crewai==1.15.32->crewai-tools) (26.1.0)\n",
+            "Requirement already satisfied: frozenlist>=1.1.1 in /usr/local/lib/python3.13/dist-packages (from aiohttp<4.0.0,>=3.9.1->instructor<1.16,>=1.3.3->crewai==1.15.32->crewai-tools) (1.8.0)\n",
+            "Requirement already satisfied: multidict<8.0,>=4.5 in /usr/local/lib/python3.13/dist-packages (from aiohttp<4.0.0,>=3.9.1->instructor<1.16,>=1.3.3->crewai==1.15.32->crewai-tools) (7.2.0)\n",
+            "Requirement already satisfied: propcache>=0.2.0 in /usr/local/lib/python3.13/dist-packages (from aiohttp<4.0.0,>=3.9.1->instructor<1.16,>=1.3.3->crewai==1.15.32->crewai-tools) (0.5.4)\n",
+            "Requirement already satisfied: yarl<2.0,>=1.25.1 in /usr/local/lib/python3.13/dist-packages (from aiohttp<4.0.0,>=3.9.1->instructor<1.16,>=1.3.3->crewai==1.15.32->crewai-tools) (1.25.1)\n",
+            "Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.13/dist-packages (from jinja2<4.0.0,>=3.1.4->instructor<1.16,>=1.3.3->crewai==1.15.32->crewai-tools) (3.0.4)\n",
+            "Requirement already satisfied: deprecation>=2.1.0 in /usr/local/lib/python3.13/dist-packages (from lancedb<1.0.0,>=0.33.0->crewai==1.15.32->crewai-tools) (2.1.0)\n",
+            "Requirement already satisfied: pyarrow>=16 in /usr/local/lib/python3.13/dist-packages (from lancedb<1.0.0,>=0.33.0->crewai==1.15.32->crewai-tools) (23.0.1)\n",
+            "Requirement already satisfied: lance-namespace>=0.3.2 in /usr/local/lib/python3.13/dist-packages (from lancedb<1.0.0,>=0.33.0->crewai==1.15.32->crewai-tools) (0.13.0)\n",
+            "Requirement already satisfied: httpx-sse>=0.4 in /usr/local/lib/python3.13/dist-packages (from mcp<2,>=1.30.0->crewai==1.15.32->crewai-tools) (0.4.3)\n",
+            "Requirement already satisfied: python-multipart>=0.0.9 in /usr/local/lib/python3.13/dist-packages (from mcp<2,>=1.30.0->crewai==1.15.32->crewai-tools) (0.0.32)\n",
+            "Requirement already satisfied: sse-starlette>=1.6.1 in /usr/local/lib/python3.13/dist-packages (from mcp<2,>=1.30.0->crewai==1.15.32->crewai-tools) (3.6.0)\n",
+            "Requirement already satisfied: starlette>=0.27 in /usr/local/lib/python3.13/dist-packages (from mcp<2,>=1.30.0->crewai==1.15.32->crewai-tools) (1.9.0)\n",
+            "Requirement already satisfied: typing-inspection>=0.4.1 in /usr/local/lib/python3.13/dist-packages (from mcp<2,>=1.30.0->crewai==1.15.32->crewai-tools) (0.4.4)\n",
+            "Requirement already satisfied: distro<2,>=1.7.0 in /usr/local/lib/python3.13/dist-packages (from openai<3,>=2.30.0->crewai==1.15.32->crewai-tools) (1.9.0)\n",
+            "Requirement already satisfied: sniffio in /usr/local/lib/python3.13/dist-packages (from openai<3,>=2.30.0->crewai==1.15.32->crewai-tools) (1.3.1)\n",
+            "Requirement already satisfied: et-xmlfile in /usr/local/lib/python3.13/dist-packages (from openpyxl~=3.1.5->crewai==1.15.32->crewai-tools) (2.0.0)\n",
+            "Requirement already satisfied: googleapis-common-protos~=1.52 in /usr/local/lib/python3.13/dist-packages (from opentelemetry-exporter-otlp-proto-http<2,>=1.45.1->crewai==1.15.32->crewai-tools) (1.76.0)\n",
+            "Requirement already satisfied: opentelemetry-exporter-http-transport==0.66b1 in /usr/local/lib/python3.13/dist-packages (from opentelemetry-exporter-http-transport[requests]==0.66b1->opentelemetry-exporter-otlp-proto-http<2,>=1.45.1->crewai==1.15.32->crewai-tools) (0.66b1)\n",
+            "Requirement already satisfied: opentelemetry-exporter-otlp-common==0.66b1 in /usr/local/lib/python3.13/dist-packages (from opentelemetry-exporter-otlp-proto-http<2,>=1.45.1->crewai==1.15.32->crewai-tools) (0.66b1)\n",
+            "Requirement already satisfied: opentelemetry-exporter-otlp-proto-common==1.45.1 in /usr/local/lib/python3.13/dist-packages (from opentelemetry-exporter-otlp-proto-http<2,>=1.45.1->crewai==1.15.32->crewai-tools) (1.45.1)\n",
+            "Requirement already satisfied: opentelemetry-proto==1.45.1 in /usr/local/lib/python3.13/dist-packages (from opentelemetry-exporter-otlp-proto-http<2,>=1.45.1->crewai==1.15.32->crewai-tools) (1.45.1)\n",
+            "Requirement already satisfied: protobuf<8.0,>=5.0 in /usr/local/lib/python3.13/dist-packages (from opentelemetry-proto==1.45.1->opentelemetry-exporter-otlp-proto-http<2,>=1.45.1->crewai==1.15.32->crewai-tools) (6.33.6)\n",
+            "Requirement already satisfied: opentelemetry-semantic-conventions==0.66b1 in /usr/local/lib/python3.13/dist-packages (from opentelemetry-sdk<2,>=1.45.1->crewai==1.15.32->crewai-tools) (0.66b1)\n",
+            "Requirement already satisfied: pdfminer.six==20260107 in /usr/local/lib/python3.13/dist-packages (from pdfplumber~=0.11.4->crewai==1.15.32->crewai-tools) (20260107)\n",
+            "Requirement already satisfied: Pillow>=12.2.0 in /usr/local/lib/python3.13/dist-packages (from pdfplumber~=0.11.4->crewai==1.15.32->crewai-tools) (13.0.0)\n",
+            "Requirement already satisfied: pypdfium2>=5.9.0 in /usr/local/lib/python3.13/dist-packages (from pdfplumber~=0.11.4->crewai==1.15.32->crewai-tools) (5.14.0)\n",
+            "Requirement already satisfied: charset-normalizer>=2.0.0 in /usr/local/lib/python3.13/dist-packages (from pdfminer.six==20260107->pdfplumber~=0.11.4->crewai==1.15.32->crewai-tools) (3.4.9)\n",
+            "Requirement already satisfied: annotated-types>=0.6.0 in /usr/local/lib/python3.13/dist-packages (from pydantic<2.13,>=2.11.9->crewai==1.15.32->crewai-tools) (0.8.0)\n",
+            "Requirement already satisfied: lxml>=3.1.0 in /usr/local/lib/python3.13/dist-packages (from python-docx~=1.2.0->crewai-tools) (6.1.3)\n",
+            "Requirement already satisfied: urllib3<3,>=1.26 in /usr/local/lib/python3.13/dist-packages (from requests<3,>=2.33.0->crewai-tools) (2.5.0)\n",
+            "Requirement already satisfied: markdown-it-py>=2.2.0 in /usr/local/lib/python3.13/dist-packages (from rich>=13.7.1->crewai-cli==1.15.32->crewai==1.15.32->crewai-tools) (4.2.0)\n",
+            "Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /usr/local/lib/python3.13/dist-packages (from rich>=13.7.1->crewai-cli==1.15.32->crewai==1.15.32->crewai-tools) (2.21.0)\n",
+            "Requirement already satisfied: huggingface-hub<3.0,>=0.16.4 in /usr/local/lib/python3.13/dist-packages (from tokenizers<1,>=0.21->crewai==1.15.32->crewai-tools) (1.33.0)\n",
+            "Requirement already satisfied: filelock>=3.10.0 in /usr/local/lib/python3.13/dist-packages (from huggingface-hub<3.0,>=0.16.4->tokenizers<1,>=0.21->crewai==1.15.32->crewai-tools) (4.2.4)\n",
+            "Requirement already satisfied: fsspec>=2023.5.0 in /usr/local/lib/python3.13/dist-packages (from huggingface-hub<3.0,>=0.16.4->tokenizers<1,>=0.21->crewai==1.15.32->crewai-tools) (2025.12.0)\n",
+            "Requirement already satisfied: hf-xet<2.0.0,>=1.6.0 in /usr/local/lib/python3.13/dist-packages (from huggingface-hub<3.0,>=0.16.4->tokenizers<1,>=0.21->crewai==1.15.32->crewai-tools) (1.7.0)\n",
+            "Requirement already satisfied: shellingham>=1.3.0 in /usr/local/lib/python3.13/dist-packages (from typer>=0.9.0->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (1.5.4)\n",
+            "Requirement already satisfied: annotated-doc>=0.0.2 in /usr/local/lib/python3.13/dist-packages (from typer>=0.9.0->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (0.0.5)\n",
+            "Requirement already satisfied: defusedxml<0.8.0,>=0.7.1 in /usr/local/lib/python3.13/dist-packages (from youtube-transcript-api~=1.2.2->crewai-tools) (0.7.1)\n",
+            "Requirement already satisfied: pyproject_hooks in /usr/local/lib/python3.13/dist-packages (from build>=1.0.3->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (1.3.3)\n",
+            "Requirement already satisfied: cffi>=2.0.0 in /usr/local/lib/python3.13/dist-packages (from cryptography>=42.0->crewai-cli==1.15.32->crewai==1.15.32->crewai-tools) (2.1.1)\n",
+            "Requirement already satisfied: pycparser in /usr/local/lib/python3.13/dist-packages (from cffi>=2.0.0->cryptography>=42.0->crewai-cli==1.15.32->crewai==1.15.32->crewai-tools) (3.12)\n",
+            "Requirement already satisfied: jsonschema-specifications>=2023.03.6 in /usr/local/lib/python3.13/dist-packages (from jsonschema>=4.19.0->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (2025.9.1)\n",
+            "Requirement already satisfied: referencing>=0.28.4 in /usr/local/lib/python3.13/dist-packages (from jsonschema>=4.19.0->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (0.37.0)\n",
+            "Requirement already satisfied: rpds-py>=0.25.0 in /usr/local/lib/python3.13/dist-packages (from jsonschema>=4.19.0->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (2026.9.1)\n",
+            "Requirement already satisfied: six>=1.9.0 in /usr/local/lib/python3.13/dist-packages (from kubernetes>=28.1.0->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (1.17.0)\n",
+            "Requirement already satisfied: python-dateutil>=2.5.3 in /usr/local/lib/python3.13/dist-packages (from kubernetes>=28.1.0->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (2.9.0.post0)\n",
+            "Requirement already satisfied: websocket-client!=0.40.0,!=0.41.*,!=0.42.*,>=0.32.0 in /usr/local/lib/python3.13/dist-packages (from kubernetes>=28.1.0->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (1.9.2)\n",
+            "Requirement already satisfied: requests-oauthlib in /usr/local/lib/python3.13/dist-packages (from kubernetes>=28.1.0->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (2.0.0)\n",
+            "Requirement already satisfied: durationpy>=0.7 in /usr/local/lib/python3.13/dist-packages (from kubernetes>=28.1.0->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (0.11)\n",
+            "Requirement already satisfied: lance-namespace-urllib3-client==0.13.0 in /usr/local/lib/python3.13/dist-packages (from lance-namespace>=0.3.2->lancedb<1.0.0,>=0.33.0->crewai==1.15.32->crewai-tools) (0.13.0)\n",
+            "Requirement already satisfied: mdurl~=0.1 in /usr/local/lib/python3.13/dist-packages (from markdown-it-py>=2.2.0->rich>=13.7.1->crewai-cli==1.15.32->crewai==1.15.32->crewai-tools) (0.1.2)\n",
+            "Requirement already satisfied: flatbuffers in /usr/local/lib/python3.13/dist-packages (from onnxruntime>=1.14.1->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (25.12.19)\n",
+            "Requirement already satisfied: tzdata>=2020.1 in /usr/local/lib/python3.13/dist-packages (from pendulum>=3.1.0->cel-python<0.6,>=0.5.0->crewai==1.15.32->crewai-tools) (2026.5)\n",
+            "Requirement already satisfied: mdit-py-plugins in /usr/local/lib/python3.13/dist-packages (from textual>=7.5.0->crewai-cli==1.15.32->crewai==1.15.32->crewai-tools) (0.6.1)\n",
+            "Requirement already satisfied: platformdirs<5,>=3.6.0 in /usr/local/lib/python3.13/dist-packages (from textual>=7.5.0->crewai-cli==1.15.32->crewai==1.15.32->crewai-tools) (4.13.5)\n",
+            "Requirement already satisfied: linkify-it-py<3,>=1 in /usr/local/lib/python3.13/dist-packages (from markdown-it-py[linkify]>=2.1.0->textual>=7.5.0->crewai-cli==1.15.32->crewai==1.15.32->crewai-tools) (2.2.0)\n",
+            "Requirement already satisfied: httptools>=0.8.0 in /usr/local/lib/python3.13/dist-packages (from uvicorn[standard]>=0.18.3->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (0.9.0)\n",
+            "Requirement already satisfied: uvloop>=0.15.1 in /usr/local/lib/python3.13/dist-packages (from uvicorn[standard]>=0.18.3->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (0.23.0)\n",
+            "Requirement already satisfied: watchfiles>=0.20 in /usr/local/lib/python3.13/dist-packages (from uvicorn[standard]>=0.18.3->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (1.3.0)\n",
+            "Requirement already satisfied: websockets>=13.0 in /usr/local/lib/python3.13/dist-packages (from uvicorn[standard]>=0.18.3->chromadb~=1.5.9->crewai==1.15.32->crewai-tools) (15.0.1)\n"
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "name": "ยินดีต้อนรับสู่ Colab",
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
